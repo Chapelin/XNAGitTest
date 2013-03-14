@@ -51,7 +51,7 @@ namespace TTRPG_case.Perso
         /// </summary>
         public int Direction;
 
-        readonly AnimatedSprite[] _spritesAnimees;
+        AnimatedSprite[] _spritesAnimees;
         public bool Flagdepl;
 
 
@@ -64,21 +64,49 @@ namespace TTRPG_case.Perso
         /// <param name="spriteHaut"></param>
         /// <param name="spriteBas"></param>
         /// <param name="spriteGauche"></param>
-        public Personnage(AnimatedSprite spriteHaut, AnimatedSprite spriteBas, AnimatedSprite spriteGauche, AnimatedSprite spriteDroit, int posX, int posY)
+        public Personnage(AnimatedSprite spriteHaut, AnimatedSprite spriteBas, AnimatedSprite spriteGauche, AnimatedSprite spriteDroit, int posX, int posY):this(posX,posY)
         {
-            this._position = new Coordonnees {X = posX, Y = posY};
-            this._spritesAnimees = new[] { spriteHaut, spriteDroit, spriteBas, spriteGauche };
+
+            this.SetSprites(spriteHaut, spriteBas, spriteGauche, spriteDroit);
+
+        }
+
+
+
+        /// <summary>
+        /// Constructeur d'un personnage
+        /// </summary>
+        /// <param name="posX"></param>
+        /// <param name="posY"></param>
+        public Personnage(int posX, int posY)
+        {
+            this._position = new Coordonnees { X = posX, Y = posY };
+
             this.OffsetCaseDepl = Vecteur.Zero;
-            for (var i = 0; i < 4; i++)
-                this._spritesAnimees[i].InitialiserAnimation();
             this.Direction = 2;
             this.Compteur = -1;
             // this.compteur = 0;
             this._cheminPrevu = new Chemin();
-            this.OffsetCaseSprite = new Coordonnees(((Game1.TailleCaseX - this.GetSprite.Width) / 2), ((Game1.TailleCaseY - this.GetSprite.Height) / 2));
             this._cfh = this.FinCheminPrevu;
             this.Flagdepl = false;
+            
+        }
 
+
+
+        /// <summary>
+        /// Setter des sprites pour le perso
+        /// </summary>
+        /// <param name="spriteHaut"></param>
+        /// <param name="spriteBas"></param>
+        /// <param name="spriteGauche"></param>
+        /// <param name="spriteDroit"></param>
+        public void SetSprites(AnimatedSprite spriteHaut, AnimatedSprite spriteBas, AnimatedSprite spriteGauche, AnimatedSprite spriteDroit)
+        {
+            this._spritesAnimees = new[] { spriteHaut, spriteDroit, spriteBas, spriteGauche };
+            for (var i = 0; i < 4; i++)
+                this._spritesAnimees[i].InitialiserAnimation();
+            this.OffsetCaseSprite = new Coordonnees(((Game1.TailleCaseX - this.GetSprite.Width) / 2), ((Game1.TailleCaseY - this.GetSprite.Height) / 2));
         }
 
 

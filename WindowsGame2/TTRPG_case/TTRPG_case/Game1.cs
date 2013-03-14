@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using ClientServeur;
+using Commun.Deplacement;
 using LibrairieUtil;
 using LibrairieUtil.AnimatedSprite;
 using Microsoft.Xna.Framework;
@@ -85,6 +86,7 @@ namespace TTRPG_case
             IMessage messagePort = MessageFactory.GetInstanceOf(TypeMessage.IndiquerPort);
             messagePort.PreparerMessage(new object[] { PortReception });
             this._emmeteur.envoyer(messagePort);
+            this._persoAutres = new Dictionary<string, Personnage>();
             base.Initialize();
         }
 
@@ -102,25 +104,9 @@ namespace TTRPG_case
             var te = this.Content.Load<Texture2D>("caseverte");
             var tevide = this.Content.Load<Texture2D>("casevide");
 
-
+            this._personnage = new Personnage(10,10);
             #region creation sprite perso
-            var spritehaut = new AnimatedSprite();
-            var spritebas = new AnimatedSprite();
-            var spritegauche = new AnimatedSprite();
-            var spritedroite = new AnimatedSprite();
-            for (var i = 0; i < 3; i++)
-            {
-                spritehaut.AjoutAnimationFrame(this.Content.Load<Texture2D>("AnimationMarche/haut" + i), 10);
-                spritebas.AjoutAnimationFrame(this.Content.Load<Texture2D>("AnimationMarche/bas" + i), 10);
-                spritegauche.AjoutAnimationFrame(this.Content.Load<Texture2D>("AnimationMarche/gauche" + i), 10);
-                spritedroite.AjoutAnimationFrame(this.Content.Load<Texture2D>("AnimationMarche/droite" + i), 10);
-            }
-
-            this._personnage = new Personnage(spritehaut, spritebas, spritegauche, spritedroite, 10, 10);
-
-
-
-
+            this.ChargeTexturePerso(this._personnage);
 
             #endregion
 
@@ -134,6 +120,27 @@ namespace TTRPG_case
             this._emmeteur.envoyer(t);
 
             
+        }
+
+        /// <summary>
+        /// Initialize les textures d'un perso
+        /// </summary>
+        /// <param name="p"></param>
+        private void ChargeTexturePerso(Personnage p)
+        {
+            var spritehaut = new AnimatedSprite();
+            var spritebas = new AnimatedSprite();
+            var spritegauche = new AnimatedSprite();
+            var spritedroite = new AnimatedSprite();
+            for (var i = 0; i < 3; i++)
+            {
+                spritehaut.AjoutAnimationFrame(this.Content.Load<Texture2D>("AnimationMarche/haut" + i), 10);
+                spritebas.AjoutAnimationFrame(this.Content.Load<Texture2D>("AnimationMarche/bas" + i), 10);
+                spritegauche.AjoutAnimationFrame(this.Content.Load<Texture2D>("AnimationMarche/gauche" + i), 10);
+                spritedroite.AjoutAnimationFrame(this.Content.Load<Texture2D>("AnimationMarche/droite" + i), 10);
+            }
+
+            p.SetSprites(spritehaut, spritebas, spritegauche, spritedroite);
         }
 
         /// <summary>
@@ -187,7 +194,7 @@ namespace TTRPG_case
             if (this._personnage.Compteur < 0 && this._personnage.ACheminPrevu() )
             {
                 Vecteur t = this._personnage.GetNextMouvement();
-                this.DeplacementPerso(t);
+                this.DeplacementPerso(t, this._personnage);
                 this._personnage.Compteur = NombreTickDeplacement;
                 
             }
@@ -197,11 +204,38 @@ namespace TTRPG_case
 
             }
 
+            foreach (var persos in this._persoAutres.Values)
+            {
+                this.GererDeplacement(persos);
+            }
+
 
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Gere le deplacement d'un perso (tick)
+        /// </summary>
+        /// <param name="personnage"></param>
+        public void GererDeplacement(Personnage personnage)
+        {
+            if (personnage.Compteur > -1)
+                personnage.Compteur--;
 
+
+            if (personnage.Compteur < 0 && personnage.ACheminPrevu())
+            {
+                Vecteur t = personnage.GetNextMouvement();
+                this.DeplacementPerso(t, personnage);
+                personnage.Compteur = NombreTickDeplacement;
+
+            }
+            if (personnage.ACheminPrevu() && personnage.Flagdepl)
+            {
+                personnage.Tick();
+
+            }
+        }
        
         /// <summary>
         /// This is called when the game should draw itself.
@@ -221,6 +255,10 @@ namespace TTRPG_case
             }
 
             _spriteBatch.Draw(this._personnage.GetSprite, new Rectangle(this._personnage.Coordonnees.X * TailleCaseX + this._personnage.OffsetCaseSprite.X + this._personnage.OffsetCaseDepl.vx, this._personnage.Coordonnees.Y * TailleCaseY + this._personnage.OffsetCaseSprite.Y + this._personnage.OffsetCaseDepl.vy, this._personnage.GetSprite.Width, this._personnage.GetSprite.Height), Color.White);
+            foreach (var perso in this._persoAutres.Values)
+            {
+                _spriteBatch.Draw(perso.GetSprite, new Rectangle(perso.Coordonnees.X * TailleCaseX + perso.OffsetCaseSprite.X + perso.OffsetCaseDepl.vx, perso.Coordonnees.Y * TailleCaseY + perso.OffsetCaseSprite.Y + perso.OffsetCaseDepl.vy, perso.GetSprite.Width, perso.GetSprite.Height), Color.White);
+            }
             _spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -329,36 +367,36 @@ namespace TTRPG_case
 
         }
 
-        private void DeplacementPerso(Vecteur v)
+        private void DeplacementPerso(Vecteur v, Personnage personnage)
         {
             Console.WriteLine("Deplacement " + v);
-            Console.WriteLine("Direction avant : " + this._personnage.Direction);
+            Console.WriteLine("Direction avant : " + personnage.Direction);
             
             //todo : optimiser
             switch (v.vx)
             {
                 case -1:
-                    this._personnage.Direction = 3;
+                    personnage.Direction = 3;
                     break;
                 case 1:
-                    this._personnage.Direction = 1;
+                    personnage.Direction = 1;
                     break;
                 default:
                     switch (v.vy)
                     {
                         case -1:
-                            this._personnage.Direction = 0;
+                            personnage.Direction = 0;
                             break;
                         case 1:
-                            this._personnage.Direction = 2;
+                            personnage.Direction = 2;
                             break;
                     }
                     break;
             }
 
-            this._personnage.Move(v);
+            personnage.Move(v);
 
-            Console.WriteLine("Direction apres : " + this._personnage.Direction);
+            Console.WriteLine("Direction apres : " + personnage.Direction);
         }
 
 
@@ -367,11 +405,16 @@ namespace TTRPG_case
         internal void NotifDepl(string joueurUi, string chemin)
         {
             Console.WriteLine("Deplacement de " + joueurUi +" sur le chemin "+chemin);
+            var c = new Chemin();
+            this._persoAutres[joueurUi].CheminPerso = Chemin.GetFromString(chemin);
         }
 
         public void ConnexionNvxJoueur(string oidj, string skin)
         {
             Console.WriteLine("Joueur " + oidj + " connecté");
+            var p = new Personnage(0,0);
+            this.ChargeTexturePerso(p);
+            this._persoAutres.Add(oidj,p);
         }
     }
 
