@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using ClientServeur;
+using Commun.Map;
 
 namespace TTRPG_Serveur
 {
@@ -8,6 +9,7 @@ namespace TTRPG_Serveur
     {
         public readonly Guid UiUnique;
         String _name;
+        private Coordonnees position;
 
         public Joueur(string name, IPAddress ip, Emetteur em)
         {
@@ -28,6 +30,12 @@ namespace TTRPG_Serveur
         public Emetteur EmetteurJoueur { get; set; }
 
         public IPAddress Adresse { get; private set; }
+
+        public Coordonnees Position
+        {
+            get { return this.position; }
+            set { this.position = value; }
+        }
 
         public override int GetHashCode()
         {

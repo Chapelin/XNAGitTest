@@ -149,6 +149,7 @@ namespace TTRPG_Serveur
             var t = MessageFactory.GetInstanceOf(TypeMessage.ReponseCarte);
             t.PreparerMessage(new object[] { "carte2",5,5 });
             j.EmetteurJoueur.envoyer(t);
+            j.Position = new Coordonnees(5,5);
             //TODO : temporaire
             if (Contenu.Keys.Count == 0)
                 Contenu.Add(new CarteEcran(), new ListeJoueur());
@@ -185,6 +186,8 @@ namespace TTRPG_Serveur
             //var lj = Contenu.Values.Where(l => l.Contains(j)).FirstOrDefault();
             ListeJoueur lj = CalculerListJouersAPrevenir(j);
 
+            j.Position = c.AppliquerAPosition(j.Position);
+
             //ici lj contient l'ensemble des joueurs de la carte
             emm.envoyer(temp);
             if (lj != null)
@@ -211,7 +214,7 @@ namespace TTRPG_Serveur
             if (lj != null)
             {
                 var message = MessageFactory.GetInstanceOf(TypeMessage.ConnexionJoueur);
-                message.PreparerMessage(j.UiUnique, string.Empty,5,5);//TODO : coordonnées joueur
+                message.PreparerMessage(j.UiUnique, string.Empty,j.Position.X,j.Position.Y);
                 foreach (var joueur in lj.ToList().Where(joueur => joueur != j))
                 {
                     joueur.EmetteurJoueur.envoyer(message);
@@ -233,7 +236,7 @@ namespace TTRPG_Serveur
                 foreach (var joueurCo in lj.ToList().Where(joueur => joueur != j))
                 {
                     var message = MessageFactory.GetInstanceOf(TypeMessage.ConnexionJoueur);
-                    message.PreparerMessage(joueurCo.UiUnique, string.Empty, 5, 5);//TODO : coordonnées joueur
+                    message.PreparerMessage(joueurCo.UiUnique, string.Empty, joueurCo.Position.X, joueurCo.Position.Y);
                     j.EmetteurJoueur.envoyer(message);
                 }
             }

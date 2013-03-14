@@ -5,6 +5,7 @@ using System.Text;
 using System.Runtime.Serialization.Formatters;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Commun.Map;
 
 namespace Commun.Deplacement
 {
@@ -167,6 +168,23 @@ namespace Commun.Deplacement
 
 
             return c;
+        }
+
+
+        /// <summary>
+        /// REtourne les coordonnées d'arrivée pour le chemin depuis des coordonnées de depart
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public Coordonnees AppliquerAPosition(Coordonnees c)
+        {
+            Coordonnees res = new Coordonnees(c.X,c.Y);
+            foreach (Vecteur parcour in parcours)
+            {
+                res = res + parcour;
+            }
+
+            return res;
         }
 
        
