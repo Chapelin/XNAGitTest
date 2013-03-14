@@ -230,7 +230,7 @@ namespace TTRPG_case
                 personnage.Compteur = NombreTickDeplacement;
 
             }
-            if (personnage.ACheminPrevu() && personnage.Flagdepl)
+            if (personnage.ACheminPrevu()/* && personnage.Flagdepl*/)
             {
                 personnage.Tick();
 
@@ -409,10 +409,10 @@ namespace TTRPG_case
             this._persoAutres[joueurUi].CheminPerso = Chemin.GetFromString(chemin);
         }
 
-        public void ConnexionNvxJoueur(string oidj, string skin)
+        public void ConnexionNvxJoueur(string oidj, string skin, string coordX, string coordY)
         {
             Console.WriteLine("Joueur " + oidj + " connecté");
-            var p = new Personnage(0,0);
+            var p = new Personnage(Convert.ToInt32(coordX),Convert.ToInt32(coordY));
             this.ChargeTexturePerso(p);
             this._persoAutres.Add(oidj,p);
         }

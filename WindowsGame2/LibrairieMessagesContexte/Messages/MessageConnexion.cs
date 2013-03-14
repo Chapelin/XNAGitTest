@@ -9,8 +9,10 @@ namespace LibrairieMessagesContexte.Messages
     {
         // 1 : ouid joueur
         // 2 nom skin ?
+        // 3 positionX
+        //4 position Y
         public MessageConnexion()
-            : base(TypeMessage.ConnexionJoueur,2)
+            : base(TypeMessage.ConnexionJoueur,4)
         {
             
         }

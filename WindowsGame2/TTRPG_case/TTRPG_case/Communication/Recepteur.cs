@@ -139,7 +139,7 @@ namespace TTRPG_case.Communication
                     this._client.NotifDepl(mess.elements[0], mess.elements[1]);
                     break;
                 case TypeMessage.ConnexionJoueur :
-                    this._client.ConnexionNvxJoueur(mess.elements[0], mess.elements[1]);
+                    this._client.ConnexionNvxJoueur(mess.elements[0], mess.elements[1], mess.elements[2],mess.elements[3]);
                     break;
             default : 
                     //erreur

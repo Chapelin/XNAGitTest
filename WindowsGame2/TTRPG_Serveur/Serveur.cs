@@ -211,14 +211,33 @@ namespace TTRPG_Serveur
             if (lj != null)
             {
                 var message = MessageFactory.GetInstanceOf(TypeMessage.ConnexionJoueur);
-                message.PreparerMessage(j.UiUnique, string.Empty);
+                message.PreparerMessage(j.UiUnique, string.Empty,5,5);//TODO : coordonnées joueur
                 foreach (var joueur in lj.ToList().Where(joueur => joueur != j))
                 {
                     joueur.EmetteurJoueur.envoyer(message);
                 }
             }
+
+            this.InformerDesJoueursConnectes(j);
         }
 
+        /// <summary>
+        /// Permet d'informer le jour J des joueurs presents sur la carte
+        /// </summary>
+        /// <param name="j"></param>
+        private void InformerDesJoueursConnectes(Joueur j)
+        {
+            var lj = CalculerListJouersAPrevenir(j);
+            if(lj!=null)
+            {
+                foreach (var joueurCo in lj.ToList().Where(joueur => joueur != j))
+                {
+                    var message = MessageFactory.GetInstanceOf(TypeMessage.ConnexionJoueur);
+                    message.PreparerMessage(joueurCo.UiUnique, string.Empty, 5, 5);//TODO : coordonnées joueur
+                    j.EmetteurJoueur.envoyer(message);
+                }
+            }
+        }
 
         private static ListeJoueur CalculerListJouersAPrevenir(Joueur j)
         {
