@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Commun.Map
+namespace Commun.Map.CaseTypes
 {
-    public class Case
+    public class CaseBase
     {
         Guid id;
         Texture2D image;
+        protected bool franchissable;
 
 
-        public Case(Texture2D im)
+        public CaseBase(Texture2D im)
         {
             this.image = im;
             this.id = new Guid();
@@ -24,6 +25,10 @@ namespace Commun.Map
             return this.image;
         }
 
+        public bool Franchissable
+        {
+            get { return this.franchissable; }
+        }
     }
 
 }

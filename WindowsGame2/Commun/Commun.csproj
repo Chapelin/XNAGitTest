@@ -94,7 +94,12 @@
   <ItemGroup>
     <Compile Include="Deplacement\Chemin.cs" />
     <Compile Include="Map\CarteEcran.cs" />
+    <Compile Include="Map\CarteReader.cs" />
     <Compile Include="Map\Case.cs" />
+    <Compile Include="Map\CaseFactory.cs" />
+    <Compile Include="Map\CaseTypes\CaseBase.cs" />
+    <Compile Include="Map\CaseTypes\CaseHerbe.cs" />
+    <Compile Include="Map\CaseTypes\CaseVide.cs" />
     <Compile Include="Map\Coordonnees.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vecteur.cs" />

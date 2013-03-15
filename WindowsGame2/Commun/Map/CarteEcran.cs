@@ -1,4 +1,5 @@
 ﻿using System;
+using Commun.Map.CaseTypes;
 using Microsoft.Xna.Framework.Graphics;
 using Commun.Deplacement;
 
@@ -6,7 +7,7 @@ namespace Commun.Map
 {
     public class CarteEcran
     {
-        readonly Case[,] _casesContenues;
+        readonly CaseBase[,] _casesContenues;
         string _nomCarte;
         //Nombre de cases X
         public int NombreCasesX;
@@ -30,10 +31,10 @@ namespace Commun.Map
         {
             this.NombreCasesX = tailleX;
             this.NombreCasesY = tailleY;
-            this._casesContenues = new Case[this.NombreCasesX,this.NombreCasesY];
+            this._casesContenues = new CaseBase[this.NombreCasesX,this.NombreCasesY];
         }
 
-        public Case GetCase(int posX, int posY)
+        public CaseBase GetCase(int posX, int posY)
         {
             return this._casesContenues[posX,posY];
         }
@@ -48,7 +49,7 @@ namespace Commun.Map
             for(var i=0;i<this.NombreCasesX;i++)
             {
                 for(var j = 0;j<this.NombreCasesY;j++)
-                    this._casesContenues[i,j] = new Case(imageDefaut);
+                    this._casesContenues[i,j] = new CaseBase(imageDefaut);
             }
         }
 
@@ -58,9 +59,9 @@ namespace Commun.Map
         /// <param name="x">Coord X de la case sur la map</param>
         /// <param name="y">Coord Y de la case sur la map</param>
         /// <param name="image">Texture du sol à mettre</param>
-        public void InitialiserCase(int x, int y,Texture2D image)
+        public void InitialiserCase(int x, int y,Texture2D image, string id)
         {
-            this._casesContenues[x, y] = new Case(image);
+            this._casesContenues[x, y] = CaseFactory.GetCase(id, image);
         }
 
         /// <summary>

@@ -295,21 +295,7 @@ namespace TTRPG_case
             {
                 var stream = TitleContainer.OpenStream("Cartes/" + nomcarte + ".txt");
                 var sr = new StreamReader(stream);
-                var temp = sr.ReadLine();
-                var li = temp.Split(';');
-                var tx = Int32.Parse(li[0]);
-                var ty = Int32.Parse(li[1]);
-                g._carteEcran = new CarteEcran(tx, ty);
-                for (var y = 0; y < ty; y++)
-                {
-                    temp = sr.ReadLine();
-                    li = temp.Split(';');
-                    for (var x = 0; x < tx; x++)
-                    {
-                        g._carteEcran.InitialiserCase(x, y, g._listeTextureCarte[li[x]]);
-                    }
-
-                }
+                g._carteEcran = CarteReader.InterpreterCarte(sr, this._listeTextureCarte);
                 g._listeCarte.Add(nomcarte, g._carteEcran);
             }
             Console.WriteLine("Carte : " + nomcarte + " chargee");
@@ -414,7 +400,24 @@ namespace TTRPG_case
             Console.WriteLine("Joueur " + oidj + " connecté");
             var p = new Personnage(Convert.ToInt32(coordX),Convert.ToInt32(coordY));
             this.ChargeTexturePerso(p);
-            this._persoAutres.Add(oidj,p);
+            //TODO : debug : null reference exception ??
+            var compte = this._persoAutres.Count;
+            for (int i = 0; i < 5; i++)
+            {
+                try
+                {
+                    this._persoAutres.Add(oidj, p);
+                    break;
+                }
+                catch (NullReferenceException)
+                {
+                    
+                    
+                }
+            
+            }
+            if(this._persoAutres.Count==compte)
+                throw new NullReferenceException("Erreur lors de l'ajout dans _persoAutre");
         }
     }
 

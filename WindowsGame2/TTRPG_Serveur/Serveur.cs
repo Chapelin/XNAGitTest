@@ -16,7 +16,7 @@ namespace TTRPG_Serveur
 {
     public class Serveur
     {
-    
+
 
         //Dico des clients
         /// <summary>
@@ -48,8 +48,8 @@ namespace TTRPG_Serveur
                     t.Start(reponse);
                 }
                 catch (SocketException e)
-                { 
-                    
+                {
+
                 }
                 catch (Exception ex)
                 {
@@ -76,7 +76,7 @@ namespace TTRPG_Serveur
             Console.WriteLine("Nouveau client : " + ipep.Address + ":" + j.EmetteurJoueur.Port());
             this.Annuaire.Add(cp, j);
             j.EmetteurJoueur.Connecter();
-           
+
             while (true)
             {
                 try
@@ -84,16 +84,16 @@ namespace TTRPG_Serveur
                     client.Receive(buffer);
                     //on recupere le emssage
                     var temp = MessageFactory.DecoderMessage(buffer);//, this);
-                    InterpreterMessage(temp,j);
+                    InterpreterMessage(temp, j);
 
-                    
+
                 }
                 catch (SocketException)
                 {
                     j.EmetteurJoueur.Deconnecter();
                     this.Annuaire.Remove(cp);
                     break;
-                    
+
                 }
                 catch (Exception e)
                 {
@@ -109,14 +109,14 @@ namespace TTRPG_Serveur
             switch (mess.getType())
             {
                 case TypeMessage.DemandeCarte:
-                    this.DemandeCarte(mess.elements[0],j);
+                    this.DemandeCarte(mess.elements[0], j);
                     break;
                 case TypeMessage.DemandeDeplacement:
                     this.DemandeDeplacement(mess.elements[0], j.EmetteurJoueur);
                     break;
                 case TypeMessage.Deplacement:
                     //deplacement
-                    
+
                     break;
                 case TypeMessage.IndicationClick:
                     //indicationclick
@@ -147,19 +147,19 @@ namespace TTRPG_Serveur
         {
             Console.WriteLine("Carte demandée : " + valeur + " depuis " + j.EmetteurJoueur);
             var t = MessageFactory.GetInstanceOf(TypeMessage.ReponseCarte);
-            t.PreparerMessage(new object[] { "carte2",5,5 });
+            t.PreparerMessage(new object[] { "carte2", 5, 5 });
             j.EmetteurJoueur.envoyer(t);
-            j.Position = new Coordonnees(5,5);
+            j.Position = new Coordonnees(5, 5);
             //TODO : temporaire
             if (Contenu.Keys.Count == 0)
                 Contenu.Add(new CarteEcran(), new ListeJoueur());
             Contenu[Contenu.Keys.First()].AjouteJoueur(j);
             this.NotifierConnexion(j);
             //endtodo
-            
+
         }
 
-      
+
 
 
         public void IndiqueClick(string p)
@@ -174,12 +174,15 @@ namespace TTRPG_Serveur
             Console.WriteLine("Chemin demandé : " + p);
             IMessage temp = MessageFactory.GetInstanceOf(TypeMessage.ReponseDeplacement);
             Chemin c = Chemin.GetFromString(p);
-            Console.WriteLine(c);
-            temp.PreparerMessage(new object[] { "true"});
             //notifier autres joueurs
             var t = new CoupleIpPort(emm.adresse(), emm.Port());
             //trouver le joueur
             var j = (Joueur)this.Annuaire[t];
+            Console.WriteLine(c);
+            var result = this.VerifierChemin(c, j);
+            temp.PreparerMessage(new object[] { "true" });
+
+
             //puis recuperer la listejoueur de ceux de son écran
             //à optimiser
             //TODO:DEBUG ICI
@@ -197,11 +200,20 @@ namespace TTRPG_Serveur
             //this.NotifierDeplacement(c,j,lj) - chemin, joueurs qui bouge, liste des joueurs à notifier
         }
 
+        private bool VerifierChemin(Chemin chemin, Joueur joueur)
+        {
+
+            var res = true;
+            var carte = Contenu.Keys.FirstOrDefault(cont => Contenu[cont].Contains(joueur));
+            return res;
+
+        }
+
         private static void NotifierDeplacement(Chemin c, Joueur j, ListeJoueur lj)
         {
             //envoie message noptif
             var message = MessageFactory.GetInstanceOf(TypeMessage.Notif);
-                    message.PreparerMessage((object)j.UiUnique.ToString(),(object)c.ToString());
+            message.PreparerMessage((object)j.UiUnique.ToString(), (object)c.ToString());
             foreach (var joueur in lj.ToList().Where(joueur => joueur != j))
             {
                 joueur.EmetteurJoueur.envoyer(message);
@@ -214,7 +226,7 @@ namespace TTRPG_Serveur
             if (lj != null)
             {
                 var message = MessageFactory.GetInstanceOf(TypeMessage.ConnexionJoueur);
-                message.PreparerMessage(j.UiUnique, string.Empty,j.Position.X,j.Position.Y);
+                message.PreparerMessage(j.UiUnique, string.Empty, j.Position.X, j.Position.Y);
                 foreach (var joueur in lj.ToList().Where(joueur => joueur != j))
                 {
                     joueur.EmetteurJoueur.envoyer(message);
@@ -231,7 +243,7 @@ namespace TTRPG_Serveur
         private void InformerDesJoueursConnectes(Joueur j)
         {
             var lj = CalculerListJouersAPrevenir(j);
-            if(lj!=null)
+            if (lj != null)
             {
                 foreach (var joueurCo in lj.ToList().Where(joueur => joueur != j))
                 {
@@ -244,17 +256,7 @@ namespace TTRPG_Serveur
 
         private static ListeJoueur CalculerListJouersAPrevenir(Joueur j)
         {
-            ListeJoueur lj = null;
-            foreach (var cont in Contenu.Values)
-            {
-                if (cont.Contains(j))
-                {
-                    lj = cont;
-                    break;
-                }
-
-            }
-            return lj;
+            return Contenu.Values.FirstOrDefault(cont => cont.Contains(j));
         }
     }
 }
