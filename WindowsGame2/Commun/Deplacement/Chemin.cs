@@ -76,7 +76,7 @@ namespace Commun.Deplacement
             {
                 v = (Vecteur)this.parcours[0];
                 this.parcours.RemoveAt(0);
-                if (this.TailleParcours == 0)
+                if (this.TailleParcours == 0 && CheminFini!=null)
                     CheminFini(this, null);
             }
             return v;
@@ -155,7 +155,7 @@ namespace Commun.Deplacement
         {
             Chemin c = new Chemin();
             string[] temp = chemin.Split('|');
-            if (temp.Length == 1 && temp[1] == "Chemin vide")
+            if (temp.Length == 1 && temp[0] == "Chemin vide")
                 return c;
             
             //ici one st sur que chemin non vide
@@ -185,6 +185,17 @@ namespace Commun.Deplacement
             }
 
             return res;
+        }
+
+
+        public Chemin Clone()
+        {
+            Chemin c = new Chemin();
+            foreach (Vecteur parcour in parcours)
+            {
+                c.AddMouvementFin(parcour);
+            }
+            return c;
         }
 
        

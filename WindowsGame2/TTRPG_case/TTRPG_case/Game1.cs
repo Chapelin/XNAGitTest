@@ -339,8 +339,9 @@ namespace TTRPG_case
             Console.WriteLine("Reponse reçue du serveur pour le deplacement : " + p);
             var t = p.Split(';');
 
-            if (t[0] == "true")
+            if (Convert.ToBoolean(t[0]))
             {
+                Console.WriteLine("Deplacement accepté");
                 this._personnage.Flagdepl = true;
                 this._personnage.Compteur = NombreTickDeplacement;
 

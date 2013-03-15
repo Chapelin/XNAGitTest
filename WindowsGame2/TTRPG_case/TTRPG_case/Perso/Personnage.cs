@@ -12,8 +12,9 @@ namespace TTRPG_case.Perso
     {
         public Texture2D Sprite
         {
-            get {
-                return this._cheminPrevu.TailleParcours > 0 ? this._spritesAnimees[this.GetNextDirection()].ActualSprite : this._spritesAnimees[this.Direction].ActualSprite;
+            get
+            {
+                return (this._cheminPrevu!=null && this._cheminPrevu.TailleParcours > 0) ? this._spritesAnimees[this.GetNextDirection()].ActualSprite : this._spritesAnimees[this.Direction].ActualSprite;
             }
         }
 
@@ -64,7 +65,8 @@ namespace TTRPG_case.Perso
         /// <param name="spriteHaut"></param>
         /// <param name="spriteBas"></param>
         /// <param name="spriteGauche"></param>
-        public Personnage(AnimatedSprite spriteHaut, AnimatedSprite spriteBas, AnimatedSprite spriteGauche, AnimatedSprite spriteDroit, int posX, int posY):this(posX,posY)
+        public Personnage(AnimatedSprite spriteHaut, AnimatedSprite spriteBas, AnimatedSprite spriteGauche, AnimatedSprite spriteDroit, int posX, int posY)
+            : this(posX, posY)
         {
 
             this.SetSprites(spriteHaut, spriteBas, spriteGauche, spriteDroit);
@@ -89,7 +91,7 @@ namespace TTRPG_case.Perso
             this._cheminPrevu = new Chemin();
             this._cfh = this.FinCheminPrevu;
             this.Flagdepl = false;
-            
+
         }
 
 
@@ -119,7 +121,8 @@ namespace TTRPG_case.Perso
                     this._cheminPrevu.CheminFini -= _cfh;
                 this._cheminPrevu = value;
                 //abonnement au nouveau chemin
-                this._cheminPrevu.CheminFini += _cfh;
+                if (null != this._cheminPrevu)
+                    this._cheminPrevu.CheminFini += _cfh;
 
             }
         }
@@ -203,7 +206,7 @@ namespace TTRPG_case.Perso
         public void Tick()
         {
 
-           
+
             int dir = this.GetNextDirection();
             this._spritesAnimees[dir].Tick();
             //gerer offset
@@ -231,8 +234,8 @@ namespace TTRPG_case.Perso
                     break;
             }
 
-            Console.WriteLine("après tick");
-            Console.Write(this);
+            //Console.WriteLine("après tick");
+            //Console.Write(this);
 
 
 
@@ -242,9 +245,9 @@ namespace TTRPG_case.Perso
         public void ResetSpriteDirection()
         {
             Console.WriteLine("Resetspritedirection");
-            foreach(AnimatedSprite sp in this._spritesAnimees)
+            foreach (AnimatedSprite sp in this._spritesAnimees)
             {
-               sp.InitialiserAnimation();
+                sp.InitialiserAnimation();
             }
             this.OffsetCaseDepl = Vecteur.Zero;
         }

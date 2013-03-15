@@ -188,31 +188,52 @@ namespace TTRPG_Serveur
             var j = (Joueur)this.Annuaire[t];
             Console.WriteLine(c);
             var result = this.VerifierChemin(c, j);
-            temp.PreparerMessage(new object[] { "true" });
-
-
-            //puis recuperer la listejoueur de ceux de son écran
-            //à optimiser
-            //TODO:DEBUG ICI
-            //var lj = Contenu.Values.Where(l => l.Contains(j)).FirstOrDefault();
-            ListeJoueur lj = CalculerListJouersAPrevenir(j);
-
-            j.Position = c.AppliquerAPosition(j.Position);
-
-            //ici lj contient l'ensemble des joueurs de la carte
+            temp.PreparerMessage(new object[] { result.ToString() });
             emm.envoyer(temp);
-            if (lj != null)
-                NotifierDeplacement(c, j, lj);
+            if (result)
+            {
+
+                //puis recuperer la listejoueur de ceux de son écran
+                //à optimiser
+                //TODO:DEBUG ICI
+                //var lj = Contenu.Values.Where(l => l.Contains(j)).FirstOrDefault();
+                ListeJoueur lj = CalculerListJouersAPrevenir(j);
+
+                j.Position = c.AppliquerAPosition(j.Position);
+
+                //ici lj contient l'ensemble des joueurs de la carte
+                
+                if (lj != null)
+                    NotifierDeplacement(c, j, lj);
+                else
+                    Console.WriteLine("pas de jouers à notif pour le deplacement de " + j.UiUnique);
+                //this.NotifierDeplacement(c,j,lj) - chemin, joueurs qui bouge, liste des joueurs à notifier
+            }
             else
-                Console.WriteLine("pas de jouers à notif pour le deplacement de " + j.UiUnique);
-            //this.NotifierDeplacement(c,j,lj) - chemin, joueurs qui bouge, liste des joueurs à notifier
+            {
+                Console.WriteLine("Deplacement refusé");
+            }
         }
 
+        /// <summary>
+        /// Verifie que le chemin est bien franchissable
+        /// </summary>
+        /// <param name="chemin">Chemin à suivre</param>
+        /// <param name="joueur">Joueur qà tester</param>
+        /// <returns>True si le chemin est valide</returns>
         private bool VerifierChemin(Chemin chemin, Joueur joueur)
         {
-
+            Chemin temp = chemin.Clone();
             var res = true;
             var carte = Contenu.Keys.FirstOrDefault(cont => Contenu[cont].Contains(joueur));
+            Coordonnees c = joueur.Position;
+            while(temp.TailleParcours>0)
+            {
+                c = c + temp.Next();
+                res &= carte.GetCase(c.X, c.Y).Franchissable;
+                if (!res)
+                    break;
+            }
             return res;
 
         }
