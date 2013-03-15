@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -147,15 +148,22 @@ namespace TTRPG_Serveur
         {
             Console.WriteLine("Carte demandée : " + valeur + " depuis " + j.EmetteurJoueur);
             var t = MessageFactory.GetInstanceOf(TypeMessage.ReponseCarte);
-            t.PreparerMessage(new object[] { "carte2", 5, 5 });
-            j.EmetteurJoueur.envoyer(t);
             j.Position = new Coordonnees(5, 5);
-            //TODO : temporaire
-            if (Contenu.Keys.Count == 0)
-                Contenu.Add(new CarteEcran(), new ListeJoueur());
-            Contenu[Contenu.Keys.First()].AjouteJoueur(j);
+            var nomCarte ="carte2";
+            t.PreparerMessage(new object[] { nomCarte, j.Position.X, j.Position.Y });
+            j.EmetteurJoueur.envoyer(t);
+            
+
+            if (!Contenu.Keys.Any(carte => carte.NomCarte == nomCarte))
+            {
+                var sr = new StreamReader(@"Cartes\"+nomCarte+".txt");
+                CarteEcran ce = CarteReader.InterpreterCarte(sr);
+                ce.NomCarte = nomCarte;
+                Contenu.Add(ce,new ListeJoueur());
+            }
+            Contenu[Contenu.Keys.First(carte => carte.NomCarte == nomCarte)].AjouteJoueur(j);
             this.NotifierConnexion(j);
-            //endtodo
+
 
         }
 

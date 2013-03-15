@@ -9,7 +9,7 @@ namespace Commun.Map
 {
     public static class CarteReader
     {
-        public static CarteEcran InterpreterCarte(StreamReader sr, Dictionary<string,Texture2D>_listeTextureCarte)
+        public static CarteEcran InterpreterCarte(StreamReader sr, Dictionary<string,Texture2D>_listeTextureCarte = null)
         {
             CarteEcran _carteEcran;
             var temp = sr.ReadLine();
@@ -23,7 +23,7 @@ namespace Commun.Map
                 li = temp.Split(';');
                 for (var x = 0; x < tx; x++)
                 {
-                    _carteEcran.InitialiserCase(x, y, _listeTextureCarte[li[x]], li[x]);
+                    _carteEcran.InitialiserCase(x, y, _listeTextureCarte==null?null:_listeTextureCarte[li[x]], li[x]);
                 }
 
             }

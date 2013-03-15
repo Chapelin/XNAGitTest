@@ -8,7 +8,7 @@ namespace Commun.Map
     public class CarteEcran
     {
         readonly CaseBase[,] _casesContenues;
-        string _nomCarte;
+        private string _nomCarte;
         //Nombre de cases X
         public int NombreCasesX;
         public int NombreCasesY;
@@ -32,6 +32,12 @@ namespace Commun.Map
             this.NombreCasesX = tailleX;
             this.NombreCasesY = tailleY;
             this._casesContenues = new CaseBase[this.NombreCasesX,this.NombreCasesY];
+        }
+
+        public string NomCarte
+        {
+            get { return this._nomCarte; }
+            set { this._nomCarte = value; }
         }
 
         public CaseBase GetCase(int posX, int posY)
