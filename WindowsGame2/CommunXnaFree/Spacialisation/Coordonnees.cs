@@ -1,4 +1,6 @@
-﻿namespace Commun.Map
+﻿
+
+namespace CommunXnaFree.Spacialisation
 {
     public class Coordonnees
     {

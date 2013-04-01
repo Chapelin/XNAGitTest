@@ -1,7 +1,8 @@
 ﻿using System;
 using Commun.Map.CaseTypes;
+using CommunXnaFree.Deplacement;
+using CommunXnaFree.Spacialisation;
 using Microsoft.Xna.Framework.Graphics;
-using Commun.Deplacement;
 
 namespace Commun.Map
 {

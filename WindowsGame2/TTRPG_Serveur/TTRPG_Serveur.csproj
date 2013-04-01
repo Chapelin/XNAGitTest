@@ -57,6 +57,10 @@
       <Project>{8F89F5BB-328C-406F-A66B-68E8A78A91E0}</Project>
       <Name>ClientServeur</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CommunXnaFree\CommunXnaFree.csproj">
+      <Project>{9B510D60-E3EB-48CB-9B6D-FE220E40AF47}</Project>
+      <Name>CommunXnaFree</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Commun\Commun.csproj">
       <Project>{62CD9ADE-B9DD-4F76-9784-98F4620E8572}</Project>
       <Name>Commun</Name>

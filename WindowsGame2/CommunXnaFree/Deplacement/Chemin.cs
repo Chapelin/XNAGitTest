@@ -2,12 +2,9 @@
 using System.Collections;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Runtime.Serialization.Formatters;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using Commun.Map;
+using CommunXnaFree.Spacialisation;
 
-namespace Commun.Deplacement
+namespace CommunXnaFree.Deplacement
 {
     public class Chemin
     {

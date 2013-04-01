@@ -2,6 +2,7 @@
 using System.Net;
 using ClientServeur;
 using Commun.Map;
+using CommunXnaFree.Spacialisation;
 
 namespace TTRPG_Serveur
 {

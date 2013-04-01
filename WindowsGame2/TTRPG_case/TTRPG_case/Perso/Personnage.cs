@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
-using Commun.Deplacement;
+using CommunXnaFree.Deplacement;
+using CommunXnaFree.Spacialisation;
 using LibrairieUtil.AnimatedSprite;
 using Microsoft.Xna.Framework.Graphics;
 using Commun;
