@@ -13,6 +13,11 @@ namespace CommunXnaFree.Spacialisation
             this.vy = y;
         }
 
+        public Vecteur(Coordonnees a):this(a.X,a.Y)
+        {
+          
+        }
+
         public static Vecteur Unitaire
         {
             get { return new Vecteur(1, 1); }

@@ -101,6 +101,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Pathfinding\PathFinding\AStart\AStart.csproj">
+      <Project>{0FCEEC6A-CF99-46D4-8F27-F1F49191FFEB}</Project>
+      <Name>AStart</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommunXnaFree\CommunXnaFree.csproj">
       <Project>{9B510D60-E3EB-48CB-9B6D-FE220E40AF47}</Project>
       <Name>CommunXnaFree</Name>

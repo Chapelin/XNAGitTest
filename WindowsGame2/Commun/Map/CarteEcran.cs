@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using AStart;
 using Commun.Map.CaseTypes;
 using CommunXnaFree.Deplacement;
 using CommunXnaFree.Spacialisation;
 using Microsoft.Xna.Framework.Graphics;
+using System.Linq;
 
 namespace Commun.Map
 {
@@ -84,36 +87,12 @@ namespace Commun.Map
             var a = oDepart.X;
             var b = oArrivee.X;
             var cpt = oDepart.X;
-            //todo : prendre en compte les obstacles
-            int diff;
-
-            if (a != b)
+            var res = this.GetChemin(oDepart, oArrivee);
+            List<Coordonnees> result = res.Select(t => t.pos).Reverse().ToList();
+            for (int i = 0; i < result.Count - 1; i++)
             {
-                diff = (b - a) / Math.Abs(b - a);
-                //diff : operateur de difference, si xDep<Xarr, diff = 1, et vice versa, idem pour y
-                //tant que le compteur sur x n'est pas egale à la valeur x d'arrivée
-                while (cpt != b)
-                {
-                    cpt += diff;
-                    c.AddMouvementFin(new Vecteur(diff, 0));
-                }
-                //ici, on a comblé la diff sur X
-            }
-
-
-            a = oDepart.Y;
-            b = oArrivee.Y;
-
-            if (a != b)
-            {
-                diff = (b - a) / Math.Abs(b - a);
-                cpt = oDepart.Y;
-                while (cpt != b)
-                {
-                    cpt += diff;
-                    c.AddMouvementFin(new Vecteur(0, diff));
-                }
-
+                var diff = (result[i + 1] - result[i]);
+                c.AddMouvementFin(new Vecteur(diff));
             }
 
             //ajout du premier vecteur, nul pour initialiser le deplacement du sprite dans al bonne direction
@@ -126,6 +105,26 @@ namespace Commun.Map
 
             return c;
         }
+
+        private List<Node> GetChemin(Coordonnees depart, Coordonnees arrivee)
+        {
+            //modifier : utiliser une classe pour representer le tableau de cases, qui à un getter en int[,]
+            var temp = new int[this.NombreCasesX,this.NombreCasesY];
+            for (int i = 0; i < this.NombreCasesX; i++)
+            {
+                for (int j = 0; j < this.NombreCasesY; j++)
+                {
+                    temp[i, j] = this._casesContenues[i, j].Franchissable ? 0 : 9;
+                }
+                
+            }
+
+            var res = Pathfinding.Singleton(100,300,true).FindPath(temp, depart, arrivee);
+            
+            return res;
+
+        }
+
     }
 
 }
