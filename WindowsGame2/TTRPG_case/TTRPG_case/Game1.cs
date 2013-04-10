@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading;
+using System.Windows.Forms;
 using ClientServeur;
 using CommunXnaFree.Deplacement;
 using CommunXnaFree.Spacialisation;
@@ -17,6 +18,7 @@ using Commun;
 using Commun.Map;
 using LibrairieMessagesContexte.Messages;
 using Utilitaires.Random;
+using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 
 namespace TTRPG_case
 {
@@ -34,7 +36,8 @@ namespace TTRPG_case
         readonly Emetteur _emmeteur;
         readonly Recepteur _recepteur;
         readonly Vecteur[] _deplacementPerFrame;
-        
+        private IntPtr drawSurface;
+        private Form frm;
         Personnage _personnage;
         private Dictionary<string, Personnage> _persoAutres;
 
@@ -52,6 +55,7 @@ namespace TTRPG_case
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+            frm = Control.FromHandle(this.Window.Handle) as Form;
             this._graphics.PreferredBackBufferHeight = 600;
             this._graphics.PreferredBackBufferWidth = 800;
             this._graphics.ApplyChanges();
@@ -80,7 +84,20 @@ namespace TTRPG_case
         /// </summary>
         protected override void Initialize()
         {
+            Button btn = new Button();
 
+            btn.Location = new System.Drawing.Point(10, 10);
+
+            btn.Text = "Exit";
+
+            btn.Click += (sender, e) => { this.Exit(); };
+
+
+
+            // add the button to the panel and add the panel to the game window form
+
+           
+            frm.Controls.Add(btn);
             this._recepteur.Initialiser();
             this._recepteur.LancerEcoute();
             this._emmeteur.Connecter();
@@ -121,7 +138,7 @@ namespace TTRPG_case
             var cartedem = "carte2";
             RandomManager r = new RandomManager();
 
-            cartedem = r.GetInt(2) == 0 ? "carte2" : "carte3";
+            //cartedem = r.GetInt(2) == 0 ? "carte2" : "carte3";
             t.PreparerMessage(new object[] { cartedem });
             this._emmeteur.envoyer(t);
 
@@ -425,6 +442,20 @@ namespace TTRPG_case
             }
             if(this._persoAutres.Count==compte)
                 throw new NullReferenceException("Erreur lors de l'ajout dans _persoAutre");
+        }
+
+        public void DeconnectionJoueur(string s)
+        {
+           if(this._persoAutres.ContainsKey(s))
+           {
+               this._persoAutres.Remove(s);
+               Console.WriteLine("Deconnexion de "+s);
+
+           }
+           else
+           {
+               Console.WriteLine("***********************\r\nERREUR deconnexion d'un joueur inconnu\r\n***********************");
+           }
         }
     }
 

@@ -14,6 +14,10 @@ namespace TTRPG_case
             {
                 game.Run();
             }
+            //GameForm form = new GameForm();
+            //form.Show();
+            //Game1 game = new Game1();
+            //game.Run();      
         }
     }
 #endif

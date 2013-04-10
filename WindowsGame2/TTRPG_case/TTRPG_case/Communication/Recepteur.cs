@@ -141,6 +141,9 @@ namespace TTRPG_case.Communication
                 case TypeMessage.ConnexionJoueur :
                     this._client.ConnexionNvxJoueur(mess.elements[0], mess.elements[1], mess.elements[2],mess.elements[3]);
                     break;
+                case TypeMessage.DeconnexionJoueur :
+                    this._client.DeconnectionJoueur(mess.elements[0]);
+                    break;
             default : 
                     //erreur
                     break;

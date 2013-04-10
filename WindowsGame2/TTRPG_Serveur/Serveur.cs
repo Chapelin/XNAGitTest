@@ -92,8 +92,9 @@ namespace TTRPG_Serveur
                 }
                 catch (SocketException)
                 {
-                    j.EmetteurJoueur.Deconnecter();
-                    this.Annuaire.Remove(cp);
+
+                    this.TraiterDeconnection(j,cp);
+                   
                     break;
 
                 }
@@ -103,6 +104,17 @@ namespace TTRPG_Serveur
                 }
 
             }
+        }
+
+        private void TraiterDeconnection(Joueur j, CoupleIpPort cp)
+        {
+            j.EmetteurJoueur.Deconnecter();
+            var liste = CalculerListJouersAPrevenir(j);
+            var mess = MessageFactory.GetInstanceOf(TypeMessage.DeconnexionJoueur);
+            mess.PreparerMessage(j.UiUnique);
+            this.InformerListeJoueur(liste, j, mess);
+            this.Annuaire.Remove(cp);
+            Contenu.Values.First(x => x.Contains(j)).RetirerJoueur(j);
         }
 
         private void InterpreterMessage(object message, Joueur j)
@@ -280,6 +292,18 @@ namespace TTRPG_Serveur
                     var message = MessageFactory.GetInstanceOf(TypeMessage.ConnexionJoueur);
                     message.PreparerMessage(joueurCo.UiUnique, string.Empty, joueurCo.Position.X, joueurCo.Position.Y);
                     j.EmetteurJoueur.envoyer(message);
+                }
+            }
+        }
+
+
+        private void InformerListeJoueur(ListeJoueur lj, Joueur j, IMessage mes, bool sauflui =true)
+        {
+            if (lj != null)
+            {
+                foreach (var joueurCo in lj.ToList().Where(joueur => joueur != j || !sauflui))
+                {
+                   joueurCo.EmetteurJoueur.envoyer(mes);
                 }
             }
         }

@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IEmetteur.cs" />
+    <Compile Include="Messages\MessageDeconnexion.cs" />
     <Compile Include="Messages\MessageConnexion.cs" />
     <Compile Include="Messages\MessageNotif.cs" />
     <Compile Include="Messages\MessageIndiquerPort.cs" />
