@@ -150,7 +150,7 @@ namespace TTRPG_Serveur
             Console.WriteLine("Carte demandée : " + valeur + " depuis " + j.EmetteurJoueur);
             var t = MessageFactory.GetInstanceOf(TypeMessage.ReponseCarte);
             j.Position = new Coordonnees(5, 5);
-            var nomCarte ="carte2";
+            var nomCarte =valeur;
             t.PreparerMessage(new object[] { nomCarte, j.Position.X, j.Position.Y });
             j.EmetteurJoueur.envoyer(t);
             

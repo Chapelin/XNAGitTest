@@ -16,6 +16,7 @@ using TTRPG_case.Perso;
 using Commun;
 using Commun.Map;
 using LibrairieMessagesContexte.Messages;
+using Utilitaires.Random;
 
 namespace TTRPG_case
 {
@@ -117,7 +118,11 @@ namespace TTRPG_case
 
             AfficherCarte(new ObjetChargementCarte(this, "cartevide"));
             var t = MessageFactory.GetInstanceOf(TypeMessage.DemandeCarte);
-            t.PreparerMessage(new object[] { "test" });
+            var cartedem = "carte2";
+            RandomManager r = new RandomManager();
+
+            cartedem = r.GetInt(2) == 0 ? "carte2" : "carte3";
+            t.PreparerMessage(new object[] { cartedem });
             this._emmeteur.envoyer(t);
 
             
