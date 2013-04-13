@@ -114,7 +114,7 @@ namespace TTRPG_Serveur
             mess.PreparerMessage(j.UiUnique);
             this.InformerListeJoueur(liste, j, mess);
             this.Annuaire.Remove(cp);
-            Contenu.Values.First(x => x.Contains(j)).RetirerJoueur(j);
+            Contenu.Values.FirstOrDefault(x => x.Contains(j)).RetirerJoueur(j);
         }
 
         private void InterpreterMessage(object message, Joueur j)

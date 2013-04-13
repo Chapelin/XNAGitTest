@@ -46,7 +46,7 @@ namespace TTRPG_case
 
         //Test
         readonly Dictionary<string, CarteEcran> _listeCarte;
-        CarteEcran _carteEcran ;
+        CarteEcran _carteEcran;
 
         //public event CarteRecueHandler CarteRecue;
 
@@ -56,7 +56,7 @@ namespace TTRPG_case
         {
             _graphics = new GraphicsDeviceManager(this);
             frm = Control.FromHandle(this.Window.Handle) as Form;
-            this._graphics.PreferredBackBufferHeight = 600;
+            this._graphics.PreferredBackBufferHeight = 800;
             this._graphics.PreferredBackBufferWidth = 800;
             this._graphics.ApplyChanges();
             this.IsMouseVisible = true;
@@ -75,6 +75,8 @@ namespace TTRPG_case
 
             Content.RootDirectory = "Content";
         }
+
+
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -96,8 +98,26 @@ namespace TTRPG_case
 
             // add the button to the panel and add the panel to the game window form
 
-           
+
             frm.Controls.Add(btn);
+            var tb = new TextBox();
+            tb.Width = 400;
+            frm.Controls.Add(tb);
+            tb.Left = 0;
+            tb.Top = 780;
+            var chat = new TextBox();
+            chat.Multiline = true;
+            chat.Height = 180;
+            chat.Width = 400;
+            chat.ScrollBars = ScrollBars.Vertical;
+
+            frm.Controls.Add(chat);
+            chat.Top = 600;
+            chat.Left = 0;
+            chat.Enabled = false;
+            //ajouter evenement qui envoie le keybord state à la form, qui rebalance les keydown au control qui a le focos 
+
+
             this._recepteur.Initialiser();
             this._recepteur.LancerEcoute();
             this._emmeteur.Connecter();
@@ -119,11 +139,11 @@ namespace TTRPG_case
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
 
-            
+
             var te = this.Content.Load<Texture2D>("caseverte");
             var tevide = this.Content.Load<Texture2D>("casevide");
 
-            this._personnage = new Personnage(10,10);
+            this._personnage = new Personnage(10, 10);
             #region creation sprite perso
             this.ChargeTexturePerso(this._personnage);
 
@@ -138,11 +158,11 @@ namespace TTRPG_case
             var cartedem = "carte2";
             RandomManager r = new RandomManager();
 
-            //cartedem = r.GetInt(2) == 0 ? "carte2" : "carte3";
+            cartedem = r.GetInt(2) == 0 ? "carte2" : "carte3";
             t.PreparerMessage(new object[] { cartedem });
             this._emmeteur.envoyer(t);
 
-            
+
         }
 
         /// <summary>
@@ -172,7 +192,7 @@ namespace TTRPG_case
         /// </summary>
         protected override void UnloadContent()
         {
-            
+
         }
 
         /// <summary>
@@ -191,7 +211,7 @@ namespace TTRPG_case
             {
                 //Console.WriteLine("Souris dans la fenetre");
                 //Console.WriteLine("Case en " + ms.X / TAILLE_CASE_X + " , " + ms.Y / TAILLE_CASE_Y);
-                if (ms.LeftButton == ButtonState.Pressed && this._personnage.Compteur<0)
+                if (ms.LeftButton == ButtonState.Pressed && this._personnage.Compteur < 0)
                 {
                     //IMessage temp = MessageFactory.GetInstanceOf(TypeMessage.DemandeDeplacement);
                     var coo = new Coordonnees(ms.X / TailleCaseX, ms.Y / TailleCaseY);
@@ -203,7 +223,7 @@ namespace TTRPG_case
 
                     IMessage m = MessageFactory.GetInstanceOf(TypeMessage.DemandeDeplacement);
                     //Vecteur t = this.personnage.getNextMouvement();
-                    m.PreparerMessage(new object[] { c});
+                    m.PreparerMessage(new object[] { c });
                     this._emmeteur.envoyer(m);
 
 
@@ -214,12 +234,12 @@ namespace TTRPG_case
                 this._personnage.Compteur--;
 
 
-            if (this._personnage.Compteur < 0 && this._personnage.ACheminPrevu() )
+            if (this._personnage.Compteur < 0 && this._personnage.ACheminPrevu())
             {
                 Vecteur t = this._personnage.GetNextMouvement();
                 this.DeplacementPerso(t, this._personnage);
                 this._personnage.Compteur = NombreTickDeplacement;
-                
+
             }
             if (this._personnage.ACheminPrevu() && this._personnage.Flagdepl)
             {
@@ -259,7 +279,7 @@ namespace TTRPG_case
 
             }
         }
-       
+
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -348,7 +368,7 @@ namespace TTRPG_case
         /// <param name="valeur">valeur renvoyée par le serveur</param>
         /// <param name="posX">Pisition X de depart</param>
         /// <param name="posY">position Y de depart</param>
-        public void ReponseCarte(string valeur,int posX, int posY)
+        public void ReponseCarte(string valeur, int posX, int posY)
         {
             Console.WriteLine("Carte demandee en chargement : " + valeur);
             this.AfficherCarteThreadee(valeur);
@@ -381,7 +401,7 @@ namespace TTRPG_case
         {
             Console.WriteLine("Deplacement " + v);
             Console.WriteLine("Direction avant : " + personnage.Direction);
-            
+
             //todo : optimiser
             switch (v.vx)
             {
@@ -414,7 +434,7 @@ namespace TTRPG_case
 
         internal void NotifDepl(string joueurUi, string chemin)
         {
-            Console.WriteLine("Deplacement de " + joueurUi +" sur le chemin "+chemin);
+            Console.WriteLine("Deplacement de " + joueurUi + " sur le chemin " + chemin);
             var c = new Chemin();
             this._persoAutres[joueurUi].CheminPerso = Chemin.GetFromString(chemin);
         }
@@ -422,7 +442,7 @@ namespace TTRPG_case
         public void ConnexionNvxJoueur(string oidj, string skin, string coordX, string coordY)
         {
             Console.WriteLine("Joueur " + oidj + " connecté");
-            var p = new Personnage(Convert.ToInt32(coordX),Convert.ToInt32(coordY));
+            var p = new Personnage(Convert.ToInt32(coordX), Convert.ToInt32(coordY));
             this.ChargeTexturePerso(p);
             //TODO : debug : null reference exception ??
             var compte = this._persoAutres.Count;
@@ -435,29 +455,29 @@ namespace TTRPG_case
                 }
                 catch (NullReferenceException)
                 {
-                    
-                    
+
+
                 }
-            
+
             }
-            if(this._persoAutres.Count==compte)
+            if (this._persoAutres.Count == compte)
                 throw new NullReferenceException("Erreur lors de l'ajout dans _persoAutre");
         }
 
         public void DeconnectionJoueur(string s)
         {
-           if(this._persoAutres.ContainsKey(s))
-           {
-               this._persoAutres.Remove(s);
-               Console.WriteLine("Deconnexion de "+s);
+            if (this._persoAutres.ContainsKey(s))
+            {
+                this._persoAutres.Remove(s);
+                Console.WriteLine("Deconnexion de " + s);
 
-           }
-           else
-           {
-               Console.WriteLine("***********************\r\nERREUR deconnexion d'un joueur inconnu\r\n***********************");
-           }
+            }
+            else
+            {
+                Console.WriteLine("***********************\r\nERREUR deconnexion d'un joueur inconnu\r\n***********************");
+            }
         }
     }
 
-   
+
 }
