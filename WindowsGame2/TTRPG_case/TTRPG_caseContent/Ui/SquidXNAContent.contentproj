@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{1DDECA86-6729-41C3-B6D4-F7375326F16C}</ProjectGuid>
+    <ProjectGuid>{C30EAA8E-1146-414A-A049-0FDEE56BFA58}</ProjectGuid>
     <ProjectTypeGuids>{96E2B04D-8817-42c6-938A-82C39BA4D311};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -19,7 +19,7 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>TTRPG_caseContent</RootNamespace>
+    <RootNamespace>SquidXNAContent</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.EffectImporter, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
@@ -40,89 +40,81 @@
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.VideoImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
-    <Reference Include="TomShane.Neoforce.Importers">
-      <HintPath>..\..\..\..\..\Downloads\neoforce-31568\Bin\TomShane.Neoforce.Importers.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="casevide.png">
-      <Name>casevide</Name>
+    <Compile Include="Cursors\Arrow.png">
+      <Name>Arrow</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="personnage.png">
-      <Name>personnage</Name>
+    <Compile Include="Cursors\Link.png">
+      <Name>Link</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="caseverte.png">
-      <Name>caseverte</Name>
+    <Compile Include="Cursors\Move.png">
+      <Name>Move</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AnimationMarche\bas0.png">
-      <Name>bas0</Name>
+    <Compile Include="Cursors\Select.png">
+      <Name>Select</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="AnimationMarche\bas1.png">
-      <Name>bas1</Name>
+    <Compile Include="Cursors\SizeNESW.png">
+      <Name>SizeNESW</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="AnimationMarche\bas2.png">
-      <Name>bas2</Name>
+    <Compile Include="Cursors\SizeNS.png">
+      <Name>SizeNS</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="AnimationMarche\droite0.png">
-      <Name>droite0</Name>
+    <Compile Include="Cursors\SizeNWSE.png">
+      <Name>SizeNWSE</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="AnimationMarche\droite1.png">
-      <Name>droite1</Name>
+    <Compile Include="Cursors\SizeWE.png">
+      <Name>SizeWE</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="AnimationMarche\droite2.png">
-      <Name>droite2</Name>
+    <Compile Include="SampleMap.png">
+      <Name>SampleMap</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="AnimationMarche\gauche0.png">
-      <Name>gauche0</Name>
+    <Compile Include="icons1.png">
+      <Name>icons1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="AnimationMarche\gauche1.png">
-      <Name>gauche1</Name>
+    <Compile Include="minimap.jpg">
+      <Name>minimap</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="AnimationMarche\gauche2.png">
-      <Name>gauche2</Name>
+    <Compile Include="paperdoll.jpg">
+      <Name>paperdoll</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="AnimationMarche\haut0.png">
-      <Name>haut0</Name>
+    <Content Include="SampleMapCoords.xml">
+      <Name>SampleMapCoords</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="xna_logo.png">
+      <Name>xna_logo</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="AnimationMarche\haut1.png">
-      <Name>haut1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="AnimationMarche\haut2.png">
-      <Name>haut2</Name>
+    <Compile Include="weapon-icons.png">
+      <Name>weapon-icons</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -132,11 +124,6 @@
       <Name>Arial10</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-    <Compile Include="border.dds">
-      <Name>border</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
     </Compile>
     <Compile Include="button_default.dds">
       <Name>button_default</Name>
@@ -205,26 +192,6 @@
     </Compile>
     <Compile Include="combo_hot.dds">
       <Name>combo_hot</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="frame.dds">
-      <Name>frame</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="grid.dds">
-      <Name>grid</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="handleNE.dds">
-      <Name>handleNE</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="handleNW.dds">
-      <Name>handleNW</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -308,6 +275,13 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="frame.dds">
+      <Name>frame</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="window.dds">
       <Name>window</Name>
       <Importer>TextureImporter</Importer>
@@ -315,117 +289,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="icons1.png">
-      <Name>icons1</Name>
+    <Compile Include="border.dds">
+      <Name>border</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="minimap.jpg">
-      <Name>minimap</Name>
+    <Compile Include="handleNE.dds">
+      <Name>handleNE</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="paperdoll.jpg">
-      <Name>paperdoll</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="SampleMap.png">
-      <Name>SampleMap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="weapon-icons.png">
-      <Name>weapon-icons</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="xna_logo.png">
-      <Name>xna_logo</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Arrow.png">
-      <Name>Arrow</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Link.png">
-      <Name>Link</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Move.png">
-      <Name>Move</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Select.png">
-      <Name>Select</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="SizeNESW.png">
-      <Name>SizeNESW</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="SizeNS.png">
-      <Name>SizeNS</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="SizeNWSE.png">
-      <Name>SizeNWSE</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="SizeWE.png">
-      <Name>SizeWE</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="cursors\Arrow.png">
-      <Name>Arrow</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="cursors\Link.png">
-      <Name>Link</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="cursors\Move.png">
-      <Name>Move</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="cursors\Select.png">
-      <Name>Select</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="cursors\SizeNESW.png">
-      <Name>SizeNESW</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="cursors\SizeNS.png">
-      <Name>SizeNS</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="cursors\SizeNWSE.png">
-      <Name>SizeNWSE</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="cursors\SizeWE.png">
-      <Name>SizeWE</Name>
+    <Compile Include="handleNW.dds">
+      <Name>handleNW</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
