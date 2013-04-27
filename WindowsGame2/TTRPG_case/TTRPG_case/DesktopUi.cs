@@ -174,7 +174,7 @@ namespace TTRPG_case
             #region sample window 5 - Panel, TextBox
 
             Window window5 = new Window();
-            window5.Size = new Point(500, 200);
+            window5.Size = new Point(500, 150);
             window5.Position = new Point(0, 0);
             window5.Resizable = false;
             window5.AllowDragOut = false;

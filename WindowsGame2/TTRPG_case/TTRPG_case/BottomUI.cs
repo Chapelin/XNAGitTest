@@ -19,14 +19,14 @@ namespace TTRPG_case
         protected override void LoadContent()
         {
             this.ui = new DesktopUi() {Name = "ui"};
-            ui.ShowCursor = true;
+            //ui.ShowCursor = true;
             
             base.LoadContent();
         }
 
         public override void Draw(GameTime gameTime)
         {
-            ui.Size = new Point(800,200);
+            ui.Size = new Point(800,150);
             ui.Position = new Point(0,600);
             ui.Update();
             ui.Draw();
