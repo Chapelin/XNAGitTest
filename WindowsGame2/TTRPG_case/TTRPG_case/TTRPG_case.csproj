@@ -95,7 +95,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Squid">
-      <HintPath>..\..\..\..\..\Downloads\Squid104\lib\Squid.dll</HintPath>
+      <HintPath>..\..\Squid.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>

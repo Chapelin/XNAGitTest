@@ -26,7 +26,7 @@ namespace TTRPG_case
 
         public override void Draw(GameTime gameTime)
         {
-            ui.Size = new Point(800,150);
+            ui.Size = new Point(800,130);
             ui.Position = new Point(0,600);
             ui.Update();
             ui.Draw();

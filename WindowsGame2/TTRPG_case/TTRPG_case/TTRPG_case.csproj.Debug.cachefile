@@ -55,7 +55,6 @@ Content\paperdoll.xnb
 Content\SampleMap.xnb
 Content\weapon-icons.xnb
 Content\xna_logo.xnb
-Content\Arial10.xnb
 Content\Arrow.xnb
 Content\Link.xnb
 Content\Move.xnb
@@ -72,7 +71,8 @@ Content\cursors\SizeNESW.xnb
 Content\cursors\SizeNS.xnb
 Content\cursors\SizeNWSE.xnb
 Content\cursors\SizeWE.xnb
+Content\Arial10.xnb
 Cartes\carte3.txt
+Cartes\carte2.txt
 Cartes\carte1.txt
 Cartes\cartevide.txt
-Cartes\carte2.txt

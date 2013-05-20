@@ -60,7 +60,7 @@ namespace TTRPG_case
         {
             _graphics = new GraphicsDeviceManager(this);
             frm = Control.FromHandle(this.Window.Handle) as Form;
-            this._graphics.PreferredBackBufferHeight = 750;
+            this._graphics.PreferredBackBufferHeight = 730;
             this._graphics.PreferredBackBufferWidth = 800;
             this._graphics.ApplyChanges();
             this.IsMouseVisible = true;
