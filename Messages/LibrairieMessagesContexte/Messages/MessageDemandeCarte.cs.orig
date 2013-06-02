@@ -1,0 +1,60 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace TTRPG_case.Communication.Messages
+{
+    public class MessageDemandeCarte : Message, IMessage
+    {
+
+        TypeMessage getType
+        {
+            get { return this._typeDuMessage; }
+        }
+
+        int getNombreParam
+        {
+            get { return this._numParam; }
+        }
+
+        public MessageDemandeCarte():base(TypeMessage.DemandeCarte,1)
+        {
+            Console.WriteLine("MessageDemandeCarte : instance créée");
+        }
+
+
+        public void PreparerMessage(object[] parametres)
+        {
+            this._message = new byte[Message.TAILLE_COMPTE+Message.TAILLE_COMPTE+Message.TAILLE_TYPE];
+            string numero_carte = parametres[0].ToString();
+            byte[] temp = MessageFactory.MettreEnForme(numero_carte, Message.TAILLE_MAX);
+            byte[] receptacle_type = MessageFactory.MettreEnForme(this._typeDuMessage.ToString(), Message.TAILLE_TYPE);
+            byte[] receptacle_taille = MessageFactory.MettreEnForme(ASCIIEncoding.ASCII.GetByteCount(numero_carte).ToString(), Message.TAILLE_COMPTE);
+            receptacle_type.CopyTo(this._message, 0);
+            receptacle_taille.CopyTo(this._message, Message.TAILLE_TYPE);
+            temp.CopyTo(this._message, Message.TAILLE_TYPE + Message.TAILLE_COMPTE);
+        }
+
+        public string MessageString
+        {
+            get { return this._valeur; }
+            set { this._valeur = value; }
+        }
+
+
+
+
+        public void ExecuterMEssage()
+        {
+            if (this.Contexte == null)
+            {
+                Console.WriteLine("Erreur : contexte vide pour " + this._valeur);
+                return;
+            }
+
+           // this.Contexte.afficherCarteThreadee(this._valeur);
+            
+        }
+    }
+}

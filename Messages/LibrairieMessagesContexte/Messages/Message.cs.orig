@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using TTRPG_case.Communication.Messages;
+
+namespace TTRPG_case.Communication
+{
+
+    
+
+    public class Message
+    {
+        public static int TAILLE_MAX = 1020;
+        public static int TAILLE_COMPTE = 2;
+        public static int TAILLE_TYPE = 2;
+        protected byte[] _message;
+        protected TypeMessage _typeDuMessage;
+        protected int _numParam;
+        protected string _valeur;
+        int _taille_message;
+        public Game1 Contexte;
+
+        public byte[] MEssageBytes
+        {
+            get { return this._message; }
+        }
+
+        public Message(TypeMessage type, int nombre)
+        {
+            this._typeDuMessage = type;
+            this._numParam = nombre;
+           
+        }
+
+        //public void PreparerMessage()
+        //{
+        //    byte[] temp = Encoding.ASCII.GetBytes(this._valeur);
+        //    this._taille_message = temp.Length;
+        //}
+
+        
+
+
+        
+
+
+    }
+}

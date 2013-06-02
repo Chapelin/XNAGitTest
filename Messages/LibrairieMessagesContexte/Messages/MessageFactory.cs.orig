@@ -1,0 +1,78 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace TTRPG_case.Communication.Messages
+{
+    public enum TypeMessage
+    {
+        Deplacement,
+        Texte,
+        DemandeCarte,
+    }
+
+    public static class MessageFactory
+    {
+
+        public static IMessage GetInstanceOf(TypeMessage type)
+        {
+            IMessage retour;
+
+            switch (type)
+            {
+                case TypeMessage.DemandeCarte:
+                    retour = new MessageDemandeCarte();
+                    break;
+                default:
+                    retour = null;
+                    break;
+            }
+
+
+            return retour;
+
+        }
+
+        public static IMessage DecoderMessage(byte[] data, Game1 cont)
+        {
+            IMessage t = null;
+            byte[] conteneur_type = data.Slice<byte>(0, Message.TAILLE_TYPE);
+            byte[] conteneur_taille = data.Slice<byte>(Message.TAILLE_TYPE, Message.TAILLE_COMPTE+Message.TAILLE_COMPTE);
+            int taille_data = int.Parse(MessageFactory.DecoderString(conteneur_taille, -1));
+            byte[] conteneur_data = data.Slice<byte>(Message.TAILLE_COMPTE + Message.TAILLE_TYPE, Message.TAILLE_TYPE + taille_data);
+            TypeMessage reçu = (TypeMessage)Enum.Parse(typeof(TypeMessage), MessageFactory.DecoderString(conteneur_type,-1));
+            t = MessageFactory.GetInstanceOf(reçu);
+            t.MessageString = DecoderString(conteneur_data, -1);
+            t.Contexte = cont;
+            return t;
+        }
+
+        /// <summary>
+        /// MEt en forme un string en bytes
+        /// </summary>
+        /// <param name="donnees">données à transformer</param>
+        /// <param name="tmax">taille du tableau</param>
+        /// <returns></returns>
+        public static byte[] MettreEnForme(string donnees, int tmax)
+        {
+            byte[] temp = new byte[tmax];
+            byte[] data = ASCIIEncoding.ASCII.GetBytes(donnees);
+            data.CopyTo(temp, 0);
+            for (int i = data.Length; i < tmax; i++)
+                temp[i] = 0;
+
+            return temp;
+        }
+
+        public static string DecoderString(byte[] data, int nombre)
+        {
+            if (nombre > 0 && nombre < data.Length)
+                data = data.Slice<byte>(0, nombre);
+            return ASCIIEncoding.ASCII.GetString(data);
+        }
+
+       
+
+    }
+}
