@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TTRPG_case;
+using Utilitaires;
 
 namespace LibrairieMessagesContexte.Messages
 {

@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="Cache\Cache.cs" />
     <Compile Include="Cache\CacheElement.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="GestionObjetClick\MovableObject.cs" />
     <Compile Include="GestionObjetClick\Objet.cs" />
     <Compile Include="GestionObjetClick\ObjetManager.cs" />
