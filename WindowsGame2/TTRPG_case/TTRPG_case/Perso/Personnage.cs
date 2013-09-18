@@ -3,13 +3,14 @@ using System.Text;
 using CommunXnaFree.Deplacement;
 using CommunXnaFree.Spacialisation;
 using LibrairieUtil.AnimatedSprite;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Commun;
 using Commun.Map;
 
 namespace TTRPG_case.Perso
 {
-    public class Personnage
+    public class Personnage : DrawableGameComponent
     {
         public Texture2D Sprite
         {
@@ -57,6 +58,7 @@ namespace TTRPG_case.Perso
         public bool Flagdepl;
 
 
+
         /// <summary>
         /// Constructeur d'un personnage
         /// </summary>
@@ -66,8 +68,8 @@ namespace TTRPG_case.Perso
         /// <param name="spriteHaut"></param>
         /// <param name="spriteBas"></param>
         /// <param name="spriteGauche"></param>
-        public Personnage(AnimatedSprite spriteHaut, AnimatedSprite spriteBas, AnimatedSprite spriteGauche, AnimatedSprite spriteDroit, int posX, int posY)
-            : this(posX, posY)
+        public Personnage(AnimatedSprite spriteHaut, AnimatedSprite spriteBas, AnimatedSprite spriteGauche, AnimatedSprite spriteDroit, int posX, int posY, Game g)
+            : this(posX, posY, g)
         {
 
             this.SetSprites(spriteHaut, spriteBas, spriteGauche, spriteDroit);
@@ -81,7 +83,7 @@ namespace TTRPG_case.Perso
         /// </summary>
         /// <param name="posX"></param>
         /// <param name="posY"></param>
-        public Personnage(int posX, int posY)
+        public Personnage(int posX, int posY, Game g):this(g)
         {
             this._position = new Coordonnees { X = posX, Y = posY };
 
@@ -95,6 +97,8 @@ namespace TTRPG_case.Perso
 
         }
 
+        public Personnage (Game g) : base(g)
+        {}
 
 
         /// <summary>
@@ -279,6 +283,15 @@ namespace TTRPG_case.Perso
         }
 
 
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+
+            SpriteBatch sp = new SpriteBatch(this.Game.GraphicsDevice);
+            sp.Begin();
+            sp.Draw(this.GetSprite, new Rectangle(this.Coordonnees.X * Game1.TailleCaseX + this.OffsetCaseSprite.X + this.OffsetCaseDepl.vx, this.Coordonnees.Y * Game1.TailleCaseY + this.OffsetCaseSprite.Y + this.OffsetCaseDepl.vy, this.GetSprite.Width, this.GetSprite.Height), Color.White);
+            sp.End();
+        }
 
 
     }

@@ -109,13 +109,13 @@ namespace TTRPG_case
             var te = this.Content.Load<Texture2D>("caseverte");
             var tevide = this.Content.Load<Texture2D>("casevide");
 
-            this._personnage = new Personnage(10, 10);
+            this._personnage = new Personnage(10, 10, this);
             #region creation sprite perso
             this.ChargeTexturePerso(this._personnage);
 
             #endregion
 
-
+            this.Components.Add(this._personnage);
             this._listeTextureCarte.Add("1", te);
             this._listeTextureCarte.Add("0", tevide);
 
@@ -263,10 +263,10 @@ namespace TTRPG_case
                 }
             }
 
-            _spriteBatch.Draw(this._personnage.GetSprite, new Rectangle(this._personnage.Coordonnees.X * TailleCaseX + this._personnage.OffsetCaseSprite.X + this._personnage.OffsetCaseDepl.vx, this._personnage.Coordonnees.Y * TailleCaseY + this._personnage.OffsetCaseSprite.Y + this._personnage.OffsetCaseDepl.vy, this._personnage.GetSprite.Width, this._personnage.GetSprite.Height), Color.White);
+            //_spriteBatch.Draw(this._personnage.GetSprite, new Rectangle(this._personnage.Coordonnees.X * TailleCaseX + this._personnage.OffsetCaseSprite.X + this._personnage.OffsetCaseDepl.vx, this._personnage.Coordonnees.Y * TailleCaseY + this._personnage.OffsetCaseSprite.Y + this._personnage.OffsetCaseDepl.vy, this._personnage.GetSprite.Width, this._personnage.GetSprite.Height), Color.White);
             foreach (var perso in this._persoAutres.Values)
             {
-                _spriteBatch.Draw(perso.GetSprite, new Rectangle(perso.Coordonnees.X * TailleCaseX + perso.OffsetCaseSprite.X + perso.OffsetCaseDepl.vx, perso.Coordonnees.Y * TailleCaseY + perso.OffsetCaseSprite.Y + perso.OffsetCaseDepl.vy, perso.GetSprite.Width, perso.GetSprite.Height), Color.White);
+                //_spriteBatch.Draw(perso.GetSprite, new Rectangle(perso.Coordonnees.X * TailleCaseX + perso.OffsetCaseSprite.X + perso.OffsetCaseDepl.vx, perso.Coordonnees.Y * TailleCaseY + perso.OffsetCaseSprite.Y + perso.OffsetCaseDepl.vy, perso.GetSprite.Width, perso.GetSprite.Height), Color.White);
             }
             _spriteBatch.End();
             base.Draw(gameTime);
@@ -408,7 +408,7 @@ namespace TTRPG_case
         public void ConnexionNvxJoueur(string oidj, string skin, string coordX, string coordY)
         {
             Console.WriteLine("Joueur " + oidj + " connecté");
-            var p = new Personnage(Convert.ToInt32(coordX), Convert.ToInt32(coordY));
+            var p = new Personnage(Convert.ToInt32(coordX), Convert.ToInt32(coordY),this);
             this.ChargeTexturePerso(p);
             //TODO : debug : null reference exception ??
             var compte = this._persoAutres.Count;
@@ -417,6 +417,7 @@ namespace TTRPG_case
                 try
                 {
                     this._persoAutres.Add(oidj, p);
+                    this.Components.Add(p);
                     break;
                 }
                 catch (NullReferenceException)
@@ -434,7 +435,9 @@ namespace TTRPG_case
         {
             if (this._persoAutres.ContainsKey(s))
             {
+                var p = _persoAutres[s];
                 this._persoAutres.Remove(s);
+                this.Components.Remove(p);
                 Console.WriteLine("Deconnexion de " + s);
 
             }
