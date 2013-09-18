@@ -36,8 +36,6 @@ namespace TTRPG_case
         readonly Emetteur _emmeteur;
         readonly Recepteur _recepteur;
         readonly Vecteur[] _deplacementPerFrame;
-        private IntPtr drawSurface;
-        private Form frm;
         Personnage _personnage;
         private Dictionary<string, Personnage> _persoAutres;
 
@@ -55,8 +53,7 @@ namespace TTRPG_case
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-            frm = Control.FromHandle(this.Window.Handle) as Form;
-            this._graphics.PreferredBackBufferHeight = 800;
+            this._graphics.PreferredBackBufferHeight = 600;
             this._graphics.PreferredBackBufferWidth = 800;
             this._graphics.ApplyChanges();
             this.IsMouseVisible = true;
@@ -86,37 +83,6 @@ namespace TTRPG_case
         /// </summary>
         protected override void Initialize()
         {
-            Button btn = new Button();
-
-            btn.Location = new System.Drawing.Point(10, 10);
-
-            btn.Text = "Exit";
-
-            btn.Click += (sender, e) => { this.Exit(); };
-
-
-
-            // add the button to the panel and add the panel to the game window form
-
-
-            frm.Controls.Add(btn);
-            var tb = new TextBox();
-            tb.Width = 400;
-            frm.Controls.Add(tb);
-            tb.Left = 0;
-            tb.Top = 780;
-            var chat = new TextBox();
-            chat.Multiline = true;
-            chat.Height = 180;
-            chat.Width = 400;
-            chat.ScrollBars = ScrollBars.Vertical;
-
-            frm.Controls.Add(chat);
-            chat.Top = 600;
-            chat.Left = 0;
-            chat.Enabled = false;
-            //ajouter evenement qui envoie le keybord state à la form, qui rebalance les keydown au control qui a le focos 
-
 
             this._recepteur.Initialiser();
             this._recepteur.LancerEcoute();
