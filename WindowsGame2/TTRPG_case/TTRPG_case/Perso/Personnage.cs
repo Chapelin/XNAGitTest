@@ -287,7 +287,7 @@ namespace TTRPG_case.Perso
         {
             base.Draw(gameTime);
 
-            SpriteBatch sp = new SpriteBatch(this.Game.GraphicsDevice);
+            var sp = new SpriteBatch(this.Game.GraphicsDevice);
             sp.Begin();
             sp.Draw(this.GetSprite, new Rectangle(this.Coordonnees.X * Game1.TailleCaseX + this.OffsetCaseSprite.X + this.OffsetCaseDepl.vx, this.Coordonnees.Y * Game1.TailleCaseY + this.OffsetCaseSprite.Y + this.OffsetCaseDepl.vy, this.GetSprite.Width, this.GetSprite.Height), Color.White);
             sp.End();

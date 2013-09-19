@@ -108,6 +108,7 @@ namespace TTRPG_case
 
             var te = this.Content.Load<Texture2D>("caseverte");
             var tevide = this.Content.Load<Texture2D>("casevide");
+            var teTelep = this.Content.Load<Texture2D>("casetelep");
 
             this._personnage = new Personnage(10, 10, this);
             #region creation sprite perso
@@ -118,13 +119,14 @@ namespace TTRPG_case
             this.Components.Add(this._personnage);
             this._listeTextureCarte.Add("1", te);
             this._listeTextureCarte.Add("0", tevide);
+            this._listeTextureCarte.Add("2", teTelep);
 
             AfficherCarte(new ObjetChargementCarte(this, "cartevide"));
             var t = MessageFactory.GetInstanceOf(TypeMessage.DemandeCarte);
             var cartedem = "carte2";
             RandomManager r = new RandomManager();
 
-            cartedem = r.GetInt(2) == 0 ? "carte2" : "carte3";
+            //cartedem = r.GetInt(2) == 0 ? "carte2" : "carte3";
             t.PreparerMessage(new object[] { cartedem });
             this._emmeteur.envoyer(t);
 
@@ -263,11 +265,6 @@ namespace TTRPG_case
                 }
             }
 
-            //_spriteBatch.Draw(this._personnage.GetSprite, new Rectangle(this._personnage.Coordonnees.X * TailleCaseX + this._personnage.OffsetCaseSprite.X + this._personnage.OffsetCaseDepl.vx, this._personnage.Coordonnees.Y * TailleCaseY + this._personnage.OffsetCaseSprite.Y + this._personnage.OffsetCaseDepl.vy, this._personnage.GetSprite.Width, this._personnage.GetSprite.Height), Color.White);
-            foreach (var perso in this._persoAutres.Values)
-            {
-                //_spriteBatch.Draw(perso.GetSprite, new Rectangle(perso.Coordonnees.X * TailleCaseX + perso.OffsetCaseSprite.X + perso.OffsetCaseDepl.vx, perso.Coordonnees.Y * TailleCaseY + perso.OffsetCaseSprite.Y + perso.OffsetCaseDepl.vy, perso.GetSprite.Width, perso.GetSprite.Height), Color.White);
-            }
             _spriteBatch.End();
             base.Draw(gameTime);
         }
