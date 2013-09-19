@@ -79,7 +79,7 @@ namespace CommunXnaFree.Deplacement
             return v;
         }
 
-
+        
         public int getNextDirection()
         {
             Vecteur v;

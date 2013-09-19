@@ -44,7 +44,7 @@ namespace TTRPG_case
 
         //Test
         readonly Dictionary<string, CarteEcran> _listeCarte;
-        CarteEcran _carteEcran;
+        public CarteEcran _carteEcran;
 
         //public event CarteRecueHandler CarteRecue;
 
@@ -197,30 +197,6 @@ namespace TTRPG_case
                 }
             }
 
-            if (this._personnage.Compteur > -1)
-                this._personnage.Compteur--;
-
-            #region WIP : gestion de l'arrivée sur une case
-            if (this._personnage.Compteur == 0 && this._personnage.Flagdepl)
-            {
-                var caseenCours = this._carteEcran.GetCase(this._personnage.NextCase);
-                Console.WriteLine("********************************************\r\n" + caseenCours.OnOver() + "\r\n********************************************\r\n");
-                
-            }
-            #endregion
-
-            if (this._personnage.Compteur < 0 && this._personnage.ACheminPrevu())
-            {
-                Vecteur t = this._personnage.GetNextMouvement();
-                this.DeplacementPerso(t, this._personnage);
-                this._personnage.Compteur = NombreTickDeplacement;
-
-            }
-            if (this._personnage.ACheminPrevu() && this._personnage.Flagdepl)
-            {
-                this._personnage.Tick();
-
-            }
 
             foreach (var persos in this._persoAutres.Values)
             {
@@ -367,7 +343,7 @@ namespace TTRPG_case
 
         }
 
-        private void DeplacementPerso(Vecteur v, Personnage personnage)
+        public void DeplacementPerso(Vecteur v, Personnage personnage)
         {
             Console.WriteLine("Deplacement " + v);
             Console.WriteLine("Direction avant : " + personnage.Direction);

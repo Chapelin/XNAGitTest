@@ -157,7 +157,10 @@ namespace TTRPG_case.Perso
         {
             var v = Vecteur.Zero;
             if (this.ACheminPrevu())
+            {
                 v = this._cheminPrevu.Next();
+                this._nextCase = this.Coordonnees + v;
+            }
             return v;
         }
 
@@ -300,6 +303,48 @@ namespace TTRPG_case.Perso
             sp.Begin();
             sp.Draw(this.GetSprite, new Rectangle(this.Coordonnees.X * Game1.TailleCaseX + this.OffsetCaseSprite.X + this.OffsetCaseDepl.vx, this.Coordonnees.Y * Game1.TailleCaseY + this.OffsetCaseSprite.Y + this.OffsetCaseDepl.vy, this.GetSprite.Width, this.GetSprite.Height), Color.White);
             sp.End();
+        }
+
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+          
+
+
+            if (this.Compteur > -1)
+                this.Compteur--;
+
+           
+
+            if (this.Compteur < 0 && this.ACheminPrevu())
+            {
+                Vecteur t = this.GetNextMouvement();
+                ((Game1)this.Game).DeplacementPerso(t, this);
+                this.Compteur = Game1.NombreTickDeplacement;
+
+            }
+
+            #region WIP : gestion de l'arrivée sur une case
+            if (this.Compteur == 0 )
+            {
+                var caseenCours = ((Game1)this.Game)._carteEcran.GetCase(this.NextCase);
+                Console.WriteLine("Case testée : " + this.NextCase);
+                Console.WriteLine("********************************************\r\n" + caseenCours.OnOver() + "\r\n********************************************\r\n");
+
+            }
+            #endregion
+
+
+
+            if (this.ACheminPrevu() && this.Flagdepl)
+            {
+                this.Tick();
+
+            }
+
+            
         }
 
 
