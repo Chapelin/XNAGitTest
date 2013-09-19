@@ -6,8 +6,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Commun.Map.CaseTypes
 {
-    class CaseTelep : CaseBase
+    public class CaseTelep : CaseBase
     {
+        
         public CaseTelep(Texture2D im) : base(im)
         {
             this.franchissable = true;
@@ -17,5 +18,7 @@ namespace Commun.Map.CaseTypes
         {
             return "CaseTelep";
         }
+
+        public int idTelep =0;
     }
 }

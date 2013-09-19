@@ -18,7 +18,8 @@ namespace LibrairieMessagesContexte.Messages
         ReponseCarte = 8,
         Notif = 9,
         ConnexionJoueur = 10,
-        DeconnexionJoueur =11
+        DeconnexionJoueur =11,
+        DemandeTelep = 12
     }
 
     public static class MessageFactory
@@ -61,6 +62,9 @@ namespace LibrairieMessagesContexte.Messages
                     break;
                 case TypeMessage.DeconnexionJoueur:
                     retour = new MessageDeconnection();
+                    break;
+                case TypeMessage.DemandeTelep:
+                    retour = new MessageDemandeTelep();
                     break;
                 default:
                     retour = null;

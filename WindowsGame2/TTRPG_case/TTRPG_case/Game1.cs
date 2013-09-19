@@ -426,6 +426,14 @@ namespace TTRPG_case
                 Console.WriteLine("***********************\r\nERREUR deconnexion d'un joueur inconnu\r\n***********************");
             }
         }
+
+        public void DemanderTeleportation(int id)
+        {
+            var message = MessageFactory.GetInstanceOf(TypeMessage.DemandeTelep);
+            message.PreparerMessage(id);
+            this._emmeteur.envoyer(message);
+
+        }
     }
 
 

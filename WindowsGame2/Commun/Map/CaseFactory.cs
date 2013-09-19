@@ -27,5 +27,18 @@ namespace Commun.Map
                     break;
             }
         }
+
+        public static string GetCaseType(CaseBase ca)
+        {
+            if (ca != null)
+            {
+                return (ca.GetType().Name);
+            }
+            return string.Empty;
+
+
+
+        }
+
     }
 }

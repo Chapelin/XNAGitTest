@@ -144,10 +144,21 @@ namespace TTRPG_Serveur
                 case TypeMessage.IndiquerPort:
                     IndiquerPortJoueur(mess.elements[0], j);
                     break;
+                case TypeMessage.DemandeTelep:
+                    TraiterTeleportation(mess.elements[0], j);
+                    break;
                 default:
                     //erreur
                     break;
             }
+        }
+
+        private void TraiterTeleportation(string s, Joueur joueur)
+        {
+            var carte = "carte3";
+            //TODO : verifier si l'id de la telep est probable et recuperer l'id de carte adéquat
+            // puis positionner j.position.x et Y comme il faut
+            DemandeCarte(carte,joueur);
         }
 
         private void IndiquerPortJoueur(string p, Joueur j)
@@ -161,7 +172,8 @@ namespace TTRPG_Serveur
         {
             Console.WriteLine("Carte demandée : " + valeur + " depuis " + j.EmetteurJoueur);
             var t = MessageFactory.GetInstanceOf(TypeMessage.ReponseCarte);
-            j.Position = new Coordonnees(5, 5);
+            if(j.Position == null)
+                j.Position = new Coordonnees(5, 5);
             var nomCarte =valeur;
             t.PreparerMessage(new object[] { nomCarte, j.Position.X, j.Position.Y });
             j.EmetteurJoueur.envoyer(t);
@@ -174,7 +186,12 @@ namespace TTRPG_Serveur
                 ce.NomCarte = nomCarte;
                 Contenu.Add(ce,new ListeJoueur());
             }
+            //un joueur ne peux etre contenu dans deux cartes à la fois
+            var temp = Contenu.Values.FirstOrDefault(x => x.Contains(j));
+            if(temp!=null)
+                temp.RetirerJoueur(j);
             Contenu[Contenu.Keys.First(carte => carte.NomCarte == nomCarte)].AjouteJoueur(j);
+
             this.NotifierConnexion(j);
 
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Commun.Map.CaseTypes;
 using CommunXnaFree.Deplacement;
 using CommunXnaFree.Spacialisation;
 using LibrairieUtil.AnimatedSprite;
@@ -330,8 +331,15 @@ namespace TTRPG_case.Perso
             if (this.Compteur == 0 )
             {
                 var caseenCours = ((Game1)this.Game)._carteEcran.GetCase(this.NextCase);
-                Console.WriteLine("Case testée : " + this.NextCase);
+                var temp = CaseFactory.GetCaseType(caseenCours);
+
+                Console.WriteLine("Case testée : " + this.NextCase + "de type "+temp);
                 Console.WriteLine("********************************************\r\n" + caseenCours.OnOver() + "\r\n********************************************\r\n");
+                if (temp == "CaseTelep")
+                {
+                    var caseTelep = caseenCours as CaseTelep;
+                    ((Game1)Game).DemanderTeleportation(caseTelep.idTelep);
+                }
 
             }
             #endregion
