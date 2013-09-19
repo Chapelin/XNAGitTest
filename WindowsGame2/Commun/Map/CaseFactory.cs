@@ -19,6 +19,9 @@ namespace Commun.Map
                 case "1":
                     return new CaseHerbe(tex);
                     break;
+                case "2":
+                    return new CaseTelep(tex);
+                    break;
                 default :
                     throw  new ArgumentException("Case inconnue : "+id);
                     break;

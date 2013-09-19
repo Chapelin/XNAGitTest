@@ -19,6 +19,11 @@ namespace CommunXnaFree.Spacialisation
         {
         }
 
+        public Coordonnees(Vecteur vecteur):this(vecteur.vx,vecteur.vy)
+        {
+            
+        }
+
         public override string ToString()
         {
             return X + "," + Y;

@@ -97,6 +97,7 @@
     <Compile Include="Map\CaseFactory.cs" />
     <Compile Include="Map\CaseTypes\CaseBase.cs" />
     <Compile Include="Map\CaseTypes\CaseHerbe.cs" />
+    <Compile Include="Map\CaseTypes\CaseTelep.cs" />
     <Compile Include="Map\CaseTypes\CaseVide.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

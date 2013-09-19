@@ -190,7 +190,6 @@ namespace TTRPG_case
                     this._personnage.CheminPerso = c;
 
                     IMessage m = MessageFactory.GetInstanceOf(TypeMessage.DemandeDeplacement);
-                    //Vecteur t = this.personnage.getNextMouvement();
                     m.PreparerMessage(new object[] { c });
                     this._emmeteur.envoyer(m);
 
@@ -201,6 +200,14 @@ namespace TTRPG_case
             if (this._personnage.Compteur > -1)
                 this._personnage.Compteur--;
 
+            #region WIP : gestion de l'arrivée sur une case
+            if (this._personnage.Compteur == 0 && this._personnage.Flagdepl)
+            {
+                var caseenCours = this._carteEcran.GetCase(this._personnage.NextCase);
+                Console.WriteLine("********************************************\r\n" + caseenCours.OnOver() + "\r\n********************************************\r\n");
+                
+            }
+            #endregion
 
             if (this._personnage.Compteur < 0 && this._personnage.ACheminPrevu())
             {

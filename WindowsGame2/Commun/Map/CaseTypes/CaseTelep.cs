@@ -6,16 +6,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Commun.Map.CaseTypes
 {
-    public class CaseVide : CaseBase
+    class CaseTelep : CaseBase
     {
-        public CaseVide(Texture2D im) : base(im)
+        public CaseTelep(Texture2D im) : base(im)
         {
-            this.franchissable = false;
+            this.franchissable = true;
         }
 
         public override string OnOver()
         {
-            return "CaseVide : WTF?";
+            return "CaseTelep";
         }
     }
 }

@@ -125,6 +125,10 @@ namespace Commun.Map
 
         }
 
+        public CaseBase GetCase(Coordonnees pos)
+        {
+            return this.GetCase(pos.X, pos.Y);
+        }
     }
 
 }

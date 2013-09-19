@@ -29,6 +29,11 @@ namespace Commun.Map.CaseTypes
         {
             get { return this.franchissable; }
         }
+
+        public virtual string OnOver()
+        {
+            return "Erreur on est sur la classe base";
+        }
     }
 
 }

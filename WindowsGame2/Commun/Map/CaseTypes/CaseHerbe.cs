@@ -12,5 +12,10 @@ namespace Commun.Map.CaseTypes
         {
             this.franchissable = true;
         }
+
+        public override string OnOver()
+        {
+            return "CaseHerbe";
+        }
     }
 }

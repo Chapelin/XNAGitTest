@@ -21,6 +21,11 @@ namespace TTRPG_case.Perso
         }
 
 
+        public Coordonnees NextCase
+        {
+            get { return this._nextCase; }
+        }
+
         /// <summary>
         /// Handler de l'evenement de fin de chemin, pour regler l'animation
         /// </summary>
@@ -56,7 +61,7 @@ namespace TTRPG_case.Perso
 
         AnimatedSprite[] _spritesAnimees;
         public bool Flagdepl;
-
+        private Coordonnees _nextCase;
 
 
         /// <summary>
@@ -153,7 +158,6 @@ namespace TTRPG_case.Perso
             var v = Vecteur.Zero;
             if (this.ACheminPrevu())
                 v = this._cheminPrevu.Next();
-
             return v;
         }
 
@@ -259,6 +263,11 @@ namespace TTRPG_case.Perso
         #endregion
 
         #region Getters
+        /// <summary>
+        /// Represente les coordonnées de la case du personnage, attention, en cas de mouvement, 
+        /// tant que le mouvement entre deux cases adjacente n'st pas fini, 
+        /// il s'agit de la precedente case (celle de depart du mouvement intercase)
+        /// </summary>
         public Coordonnees Coordonnees
         {
             get { return this._position; }
