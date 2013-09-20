@@ -155,7 +155,9 @@ namespace TTRPG_Serveur
 
         private void TraiterTeleportation(string s, Joueur joueur)
         {
-            var carte = "carte3";
+            var carte = "carte2";
+            if (Convert.ToInt32(s) < 4)
+                carte = "carte3";
             //TODO : verifier si l'id de la telep est probable et recuperer l'id de carte adéquat
             // puis positionner j.position.x et Y comme il faut
             DemandeCarte(carte,joueur);

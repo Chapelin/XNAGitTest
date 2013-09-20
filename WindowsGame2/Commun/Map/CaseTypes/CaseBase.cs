@@ -34,6 +34,11 @@ namespace Commun.Map.CaseTypes
         {
             return "Erreur on est sur la classe base";
         }
+
+        public virtual void SetParameters(object[] parametres)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

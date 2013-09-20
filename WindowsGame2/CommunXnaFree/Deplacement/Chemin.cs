@@ -73,9 +73,10 @@ namespace CommunXnaFree.Deplacement
             {
                 v = (Vecteur)this.parcours[0];
                 this.parcours.RemoveAt(0);
-                if (this.TailleParcours == 0 && CheminFini!=null)
-                    CheminFini(this, null);
+                
             }
+            if (this.TailleParcours == 0 && CheminFini != null)
+                CheminFini(this, null);
             return v;
         }
 
@@ -195,6 +196,11 @@ namespace CommunXnaFree.Deplacement
             return c;
         }
 
+        public void ViderChemin()
+        {
+            this.parcours = new ArrayList();
+            this.Next();
+        }
        
     }
 }

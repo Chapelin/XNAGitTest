@@ -278,7 +278,7 @@ namespace TTRPG_case
 
             if (g._listeCarte.ContainsKey(nomcarte))
             {
-                g._carteEcran = this._listeCarte["nomcarte"];
+                g._carteEcran = this._listeCarte[nomcarte];
             }
             else
             {
@@ -320,6 +320,7 @@ namespace TTRPG_case
             this.AfficherCarteThreadee(valeur);
             //on place le perso à sa position indiquée par le serveur
             this._personnage.Coordonnees = new Coordonnees { X = posX, Y = posY };
+            
         }
 
 
@@ -432,7 +433,7 @@ namespace TTRPG_case
             var message = MessageFactory.GetInstanceOf(TypeMessage.DemandeTelep);
             message.PreparerMessage(id);
             this._emmeteur.envoyer(message);
-
+            this._personnage.Stop();
         }
     }
 

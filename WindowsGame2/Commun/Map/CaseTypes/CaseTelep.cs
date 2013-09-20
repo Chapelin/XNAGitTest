@@ -20,5 +20,15 @@ namespace Commun.Map.CaseTypes
         }
 
         public int idTelep =0;
+
+        public override void SetParameters(object[] parametres)
+        {
+            if (parametres.Count() != 1)
+            {
+                throw new ArgumentException("Parametres pas de la bonne taille");
+            }
+
+            idTelep = Convert.ToInt32(parametres[0]);
+        }
     }
 }
