@@ -23,7 +23,18 @@ namespace Commun.Map
                 li = temp.Split(';');
                 for (var x = 0; x < tx; x++)
                 {
-                    _carteEcran.InitialiserCase(x, y, _listeTextureCarte==null?null:_listeTextureCarte[li[x]], li[x]);
+
+                    if (!li[x].Contains(":"))
+                        _carteEcran.InitialiserCase(x, y, _listeTextureCarte == null ? null : _listeTextureCarte[li[x]], li[x]);
+                    else
+                    {
+                        var valeurs = li[x].Split(':');
+                        var id = valeurs[0];
+                        var res = valeurs.ToList();
+                        res.RemoveAt(0);
+
+                        _carteEcran.InitialiserCase(x, y, _listeTextureCarte == null ? null : _listeTextureCarte[id], id, res.ToArray());
+                    }
                 }
 
             }

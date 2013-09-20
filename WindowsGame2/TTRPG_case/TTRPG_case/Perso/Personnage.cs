@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Commun.Map.CaseTypes;
 using CommunXnaFree.Deplacement;
 using CommunXnaFree.Spacialisation;
 using LibrairieUtil.AnimatedSprite;
@@ -76,9 +77,7 @@ namespace TTRPG_case.Perso
         public Personnage(AnimatedSprite spriteHaut, AnimatedSprite spriteBas, AnimatedSprite spriteGauche, AnimatedSprite spriteDroit, int posX, int posY, Game g)
             : this(posX, posY, g)
         {
-
             this.SetSprites(spriteHaut, spriteBas, spriteGauche, spriteDroit);
-
         }
 
 
@@ -133,7 +132,6 @@ namespace TTRPG_case.Perso
                 //abonnement au nouveau chemin
                 if (null != this._cheminPrevu)
                     this._cheminPrevu.CheminFini += _cfh;
-
             }
         }
 
@@ -143,7 +141,6 @@ namespace TTRPG_case.Perso
             var prevu = false;
             if (this._cheminPrevu != null)
                 prevu = this._cheminPrevu.TailleParcours > 0;
-
             return prevu;
         }
 
@@ -157,7 +154,10 @@ namespace TTRPG_case.Perso
         {
             var v = Vecteur.Zero;
             if (this.ACheminPrevu())
+            {
                 v = this._cheminPrevu.Next();
+                this._nextCase = this.Coordonnees + v;
+            }
             return v;
         }
 
@@ -165,7 +165,6 @@ namespace TTRPG_case.Perso
         public int GetNextDirection()
         {
             var retour = this._cheminPrevu.getNextDirection();
-
             return retour;
         }
 
@@ -185,7 +184,6 @@ namespace TTRPG_case.Perso
             Console.WriteLine("Perso deplacé de : " + v.vx + " , " + v.vy);
             this._position.X += v.vx;
             this._position.Y += v.vy;
-
         }
 
         /// <summary>
@@ -214,8 +212,6 @@ namespace TTRPG_case.Perso
 
         public void Tick()
         {
-
-
             int dir = this.GetNextDirection();
             this._spritesAnimees[dir].Tick();
             //gerer offset
@@ -245,10 +241,6 @@ namespace TTRPG_case.Perso
 
             //Console.WriteLine("après tick");
             //Console.Write(this);
-
-
-
-
         }
 
         public void ResetSpriteDirection()
@@ -291,7 +283,6 @@ namespace TTRPG_case.Perso
             return sb.ToString();
         }
 
-
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
@@ -302,6 +293,47 @@ namespace TTRPG_case.Perso
             sp.End();
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
 
+            if (this.Compteur > -1)
+                this.Compteur--;
+
+            if (this.Compteur < 0 && this.ACheminPrevu())
+            {
+                Vecteur t = this.GetNextMouvement();
+                ((Game1)this.Game).DeplacementPerso(t, this);
+                this.Compteur = Game1.NombreTickDeplacement;
+            }
+
+            #region WIP : gestion de l'arrivée sur une case
+            if (this.Compteur == 0 )
+            {
+                var caseenCours = ((Game1)this.Game)._carteEcran.GetCase(this.NextCase);
+                var temp = CaseFactory.GetCaseType(caseenCours);
+
+                Console.WriteLine("Case testée : " + this.NextCase + "de type "+temp);
+                Console.WriteLine("********************************************\r\n" + caseenCours.OnOver() + "\r\n********************************************\r\n");
+                if (temp == "CaseTelep")
+                {
+                    var caseTelep = caseenCours as CaseTelep;
+                    ((Game1)Game).DemanderTeleportation(caseTelep.idTelep);
+                }
+
+            }
+            #endregion
+            if (this.ACheminPrevu() && this.Flagdepl)
+            {
+                this.Tick();
+
+            }
+        }
+
+        public void Stop()
+        {
+            Console.WriteLine("STOP");
+            this._cheminPrevu.ViderChemin();
+        }
     }
 }

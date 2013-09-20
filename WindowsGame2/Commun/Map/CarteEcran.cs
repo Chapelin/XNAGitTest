@@ -69,9 +69,16 @@ namespace Commun.Map
         /// <param name="x">Coord X de la case sur la map</param>
         /// <param name="y">Coord Y de la case sur la map</param>
         /// <param name="image">Texture du sol à mettre</param>
-        public void InitialiserCase(int x, int y,Texture2D image, string id)
+        /// <param name="id"> </param>
+        /// <param name="parametres"> </param>
+        public void InitialiserCase(int x, int y,Texture2D image, string id, params object[] parametres)
         {
+            
             this._casesContenues[x, y] = CaseFactory.GetCase(id, image);
+            if (parametres != null && parametres.Any())
+            {
+                this._casesContenues[x, y].SetParameters(parametres);
+            }
         }
 
         /// <summary>
