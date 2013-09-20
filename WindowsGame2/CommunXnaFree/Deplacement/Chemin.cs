@@ -14,6 +14,7 @@ namespace CommunXnaFree.Deplacement
         /// </summary>
         ArrayList parcours;
 
+        public bool PremierPeekNextFait = false;
 
         /// <summary>
         /// Evenement déclenché lors de la fin d'un chemin
@@ -66,7 +67,7 @@ namespace CommunXnaFree.Deplacement
         /// TOFO : peut etre trop tot
         /// </summary>
         /// <returns>Le vecteur de deplacement, vecteur Zero si la liste est vide</returns>
-        public Vecteur Next()
+        public Vecteur Avance()
         {
             Vecteur v = Vecteur.Zero;
             if (this.TailleParcours > 0)
@@ -75,8 +76,7 @@ namespace CommunXnaFree.Deplacement
                 this.parcours.RemoveAt(0);
                 
             }
-            if (this.TailleParcours == 0 && CheminFini != null)
-                CheminFini(this, null);
+           
             return v;
         }
 
@@ -199,8 +199,27 @@ namespace CommunXnaFree.Deplacement
         public void ViderChemin()
         {
             this.parcours = new ArrayList();
-            this.Next();
+            this.PremierPeekNextFait = false;
         }
-       
+
+        public Vecteur PeekNext()
+        {
+            this.PremierPeekNextFait = true;
+            Vecteur v = Vecteur.Zero;
+            if (this.TailleParcours > 0)
+            {
+                v = (Vecteur)this.parcours[0];
+
+            }
+            if (this.TailleParcours == 0 && CheminFini != null)
+                CheminFini(this, null);
+            return v;
+        }
+
+        public void RemoveFirst()
+        {
+            if(this.TailleParcours>0)
+                this.parcours.RemoveAt(0);
+        }
     }
 }

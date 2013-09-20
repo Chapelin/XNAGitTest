@@ -17,15 +17,12 @@ namespace TTRPG_case.Perso
         {
             get
             {
-                return (this._cheminPrevu!=null && this._cheminPrevu.TailleParcours > 0) ? this._spritesAnimees[this.GetNextDirection()].ActualSprite : this._spritesAnimees[this.Direction].ActualSprite;
+                return (this._cheminPrevu != null && this._cheminPrevu.TailleParcours > 0) ? this._spritesAnimees[this.GetNextDirection()].ActualSprite : this._spritesAnimees[this.Direction].ActualSprite;
             }
         }
 
 
-        public Coordonnees NextCase
-        {
-            get { return this._nextCase; }
-        }
+      
 
         /// <summary>
         /// Handler de l'evenement de fin de chemin, pour regler l'animation
@@ -61,7 +58,7 @@ namespace TTRPG_case.Perso
         public int Direction;
 
         AnimatedSprite[] _spritesAnimees;
-        public bool Flagdepl;
+        private bool _flagdepl;
         private Coordonnees _nextCase;
 
 
@@ -87,7 +84,8 @@ namespace TTRPG_case.Perso
         /// </summary>
         /// <param name="posX"></param>
         /// <param name="posY"></param>
-        public Personnage(int posX, int posY, Game g):this(g)
+        public Personnage(int posX, int posY, Game g)
+            : this(g)
         {
             this._position = new Coordonnees { X = posX, Y = posY };
 
@@ -97,12 +95,13 @@ namespace TTRPG_case.Perso
             // this.compteur = 0;
             this._cheminPrevu = new Chemin();
             this._cfh = this.FinCheminPrevu;
-            this.Flagdepl = false;
+            this._flagdepl = false;
 
         }
 
-        public Personnage (Game g) : base(g)
-        {}
+        public Personnage(Game g)
+            : base(g)
+        { }
 
 
         /// <summary>
@@ -133,6 +132,7 @@ namespace TTRPG_case.Perso
                 if (null != this._cheminPrevu)
                     this._cheminPrevu.CheminFini += _cfh;
             }
+            
         }
 
 
@@ -144,24 +144,6 @@ namespace TTRPG_case.Perso
             return prevu;
         }
 
-
-
-        /// <summary>
-        /// REtourne le premier vecteur de la liste, et le supprime
-        /// </summary>
-        /// <returns></returns>
-        public Vecteur GetNextMouvement()
-        {
-            var v = Vecteur.Zero;
-            if (this.ACheminPrevu())
-            {
-                v = this._cheminPrevu.Next();
-                this._nextCase = this.Coordonnees + v;
-            }
-            return v;
-        }
-
-
         public int GetNextDirection()
         {
             var retour = this._cheminPrevu.getNextDirection();
@@ -172,7 +154,7 @@ namespace TTRPG_case.Perso
         public void FinCheminPrevu(object sender, EventArgs e)
         {
             Console.WriteLine("Fin chemin prevu pour perso");
-            this.Flagdepl = false;
+            this._flagdepl = false;
             this.ResetSpriteDirection();
         }
 
@@ -186,27 +168,6 @@ namespace TTRPG_case.Perso
             this._position.Y += v.vy;
         }
 
-        /// <summary>
-        /// Deplace le perso à l'endroit indiqué
-        /// </summary>
-        /// <param name="coord"></param>
-        public void MoveTo(Coordonnees coord)
-        {
-            this._position = coord;
-            Console.WriteLine("Perso deplacé en :" + this._position);
-        }
-
-
-        /// <summary>
-        /// Calcul le vecteur de deplacement pour aller à la coordonnée indiquée
-        /// </summary>
-        /// <param name="coord">Coordonnée cible</param>
-        /// <returns>ecteur de deplacement necessaire</returns>
-        public Vecteur CalculerVecteurDeplacement(Coordonnees coord)
-        {
-            return new Vecteur(coord.X - this._position.X, coord.Y - this._position.Y);
-        }
-
 
         #region gestion animation
 
@@ -215,7 +176,6 @@ namespace TTRPG_case.Perso
             int dir = this.GetNextDirection();
             this._spritesAnimees[dir].Tick();
             //gerer offset
-            //l'erreur est forcement ici
             var t = (float)(Game1.NombreTickDeplacement - this.Compteur) / Game1.NombreTickDeplacement;
             var d = t * Game1.TailleCaseX;
 
@@ -251,6 +211,8 @@ namespace TTRPG_case.Perso
                 sp.InitialiserAnimation();
             }
             this.OffsetCaseDepl = Vecteur.Zero;
+            this.Compteur = -1;
+
         }
         #endregion
 
@@ -270,6 +232,17 @@ namespace TTRPG_case.Perso
         {
             get { return this.Sprite; }
         }
+
+        public bool Flagdepl
+        {
+            get { return _flagdepl; }
+            set
+            {
+                _flagdepl = value;
+                
+            }
+        }
+
         #endregion
 
         public override string ToString()
@@ -286,7 +259,6 @@ namespace TTRPG_case.Perso
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-
             var sp = new SpriteBatch(this.Game.GraphicsDevice);
             sp.Begin();
             sp.Draw(this.GetSprite, new Rectangle(this.Coordonnees.X * Game1.TailleCaseX + this.OffsetCaseSprite.X + this.OffsetCaseDepl.vx, this.Coordonnees.Y * Game1.TailleCaseY + this.OffsetCaseSprite.Y + this.OffsetCaseDepl.vy, this.GetSprite.Width, this.GetSprite.Height), Color.White);
@@ -296,39 +268,47 @@ namespace TTRPG_case.Perso
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
-            if (this.Compteur > -1)
-                this.Compteur--;
-
-            if (this.Compteur < 0 && this.ACheminPrevu())
-            {
-                Vecteur t = this.GetNextMouvement();
-                ((Game1)this.Game).DeplacementPerso(t, this);
-                this.Compteur = Game1.NombreTickDeplacement;
-            }
-
-            #region WIP : gestion de l'arrivée sur une case
-            if (this.Compteur == 0 )
-            {
-                var caseenCours = ((Game1)this.Game)._carteEcran.GetCase(this.NextCase);
-                var temp = CaseFactory.GetCaseType(caseenCours);
-
-                Console.WriteLine("Case testée : " + this.NextCase + "de type "+temp);
-                Console.WriteLine("********************************************\r\n" + caseenCours.OnOver() + "\r\n********************************************\r\n");
-                if (temp == "CaseTelep")
+                if (Compteur < 0 && Flagdepl)
                 {
-                    var caseTelep = caseenCours as CaseTelep;
-                    ((Game1)Game).DemanderTeleportation(caseTelep.idTelep);
+                    Vecteur v = Vecteur.Zero;
+                    // pour eviter deplacement auto lors de la premiere cases : on ne passe dedans que après un premier compteur déroulé
+                    if (this._cheminPrevu.PremierPeekNextFait)
+                    {
+                        this.Move(this._cheminPrevu.PeekNext());
+                        this._cheminPrevu.RemoveFirst();
+                    }
+                      v = this._cheminPrevu.PeekNext();
+                    this._nextCase = this.Coordonnees + v;
+                     if (Flagdepl) //flagdep sera remit à false si pas de chemin dans peeknext
+                     {
+                         ((Game1)this.Game).DeplacementPerso(v, this);
+                         this.Compteur = Game1.NombreTickDeplacement;
+                     }
                 }
+                if (Flagdepl && Compteur > -1)
+                    Compteur--;
+            if(Flagdepl)
+                Tick();
 
-            }
-            #endregion
-            if (this.ACheminPrevu() && this.Flagdepl)
-            {
-                this.Tick();
+                #region WIP : gestion de l'arrivée sur une case
+                if (this.Compteur == 0)
+                {
+                    var caseCible = ((Game1) this.Game)._carteEcran.GetCase(this._nextCase);
+                    var temp = CaseFactory.GetCaseType(caseCible);
 
-            }
+                    Console.WriteLine("Case testée : " + this._nextCase + "de type " + temp);
+                    Console.WriteLine("********************************************\r\n" + caseCible.OnOver() +
+                                      "\r\n********************************************\r\n");
+                    if (temp == "CaseTelep")
+                    {
+                        var caseTelep = caseCible as CaseTelep;
+                        ((Game1) Game).DemanderTeleportation(caseTelep.idTelep);
+                    }
+                }
+                #endregion
         }
+
+       
 
         public void Stop()
         {

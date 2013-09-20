@@ -261,7 +261,7 @@ namespace TTRPG_Serveur
             Coordonnees c = joueur.Position;
             while(temp.TailleParcours>0)
             {
-                c = c + temp.Next();
+                c = c + temp.Avance();
                 res &= carte.GetCase(c.X, c.Y).Franchissable;
                 if (!res)
                     break;

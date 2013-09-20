@@ -83,7 +83,6 @@ namespace TTRPG_case
         /// </summary>
         protected override void Initialize()
         {
-
             this._recepteur.Initialiser();
             this._recepteur.LancerEcoute();
             this._emmeteur.Connecter();
@@ -103,9 +102,6 @@ namespace TTRPG_case
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-
-
             var te = this.Content.Load<Texture2D>("caseverte");
             var tevide = this.Content.Load<Texture2D>("casevide");
             var teTelep = this.Content.Load<Texture2D>("casetelep");
@@ -129,8 +125,6 @@ namespace TTRPG_case
             //cartedem = r.GetInt(2) == 0 ? "carte2" : "carte3";
             t.PreparerMessage(new object[] { cartedem });
             this._emmeteur.envoyer(t);
-
-
         }
 
         /// <summary>
@@ -150,7 +144,6 @@ namespace TTRPG_case
                 spritegauche.AjoutAnimationFrame(this.Content.Load<Texture2D>("AnimationMarche/gauche" + i), 10);
                 spritedroite.AjoutAnimationFrame(this.Content.Load<Texture2D>("AnimationMarche/droite" + i), 10);
             }
-
             p.SetSprites(spritehaut, spritebas, spritegauche, spritedroite);
         }
 
@@ -160,7 +153,6 @@ namespace TTRPG_case
         /// </summary>
         protected override void UnloadContent()
         {
-
         }
 
         /// <summary>
@@ -181,55 +173,18 @@ namespace TTRPG_case
                 //Console.WriteLine("Case en " + ms.X / TAILLE_CASE_X + " , " + ms.Y / TAILLE_CASE_Y);
                 if (ms.LeftButton == ButtonState.Pressed && this._personnage.Compteur < 0)
                 {
-                    //IMessage temp = MessageFactory.GetInstanceOf(TypeMessage.DemandeDeplacement);
                     var coo = new Coordonnees(ms.X / TailleCaseX, ms.Y / TailleCaseY);
                     var c = this._carteEcran.CalculerChemin(this._personnage.Coordonnees, coo);
-                    //TODO : verifier chemin coté serveur
-
-
                     this._personnage.CheminPerso = c;
-
                     IMessage m = MessageFactory.GetInstanceOf(TypeMessage.DemandeDeplacement);
                     m.PreparerMessage(new object[] { c });
                     this._emmeteur.envoyer(m);
-
-
                 }
             }
-
-
-            foreach (var persos in this._persoAutres.Values)
-            {
-                this.GererDeplacement(persos);
-            }
-
-
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// Gere le deplacement d'un perso (tick)
-        /// </summary>
-        /// <param name="personnage"></param>
-        public void GererDeplacement(Personnage personnage)
-        {
-            if (personnage.Compteur > -1)
-                personnage.Compteur--;
-
-
-            if (personnage.Compteur < 0 && personnage.ACheminPrevu())
-            {
-                Vecteur t = personnage.GetNextMouvement();
-                this.DeplacementPerso(t, personnage);
-                personnage.Compteur = NombreTickDeplacement;
-
-            }
-            if (personnage.ACheminPrevu()/* && personnage.Flagdepl*/)
-            {
-                personnage.Tick();
-
-            }
-        }
+ 
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -247,6 +202,8 @@ namespace TTRPG_case
                     _spriteBatch.Draw(this._carteEcran.GetCase(x, y).getImage(), new Rectangle(x * TailleCaseX, y * TailleCaseY, TailleCaseX, TailleCaseY), Color.White);
                 }
             }
+
+            _spriteBatch.Draw(_carteEcran.GetCase(0, 0).getImage(), new Rectangle(0, 0, 15, 15), this._personnage.Compteur<0 ? Color.Blue : Color.Red);
 
             _spriteBatch.End();
             base.Draw(gameTime);
@@ -333,15 +290,12 @@ namespace TTRPG_case
             {
                 Console.WriteLine("Deplacement accepté");
                 this._personnage.Flagdepl = true;
-                this._personnage.Compteur = NombreTickDeplacement;
-
             }
             else
             {
                 Console.WriteLine("Deplacement refusé");
                 this._personnage.CheminPerso = null;
             }
-
         }
 
         public void DeplacementPerso(Vecteur v, Personnage personnage)
@@ -370,9 +324,6 @@ namespace TTRPG_case
                     }
                     break;
             }
-
-            personnage.Move(v);
-
             Console.WriteLine("Direction apres : " + personnage.Direction);
         }
 
@@ -384,6 +335,7 @@ namespace TTRPG_case
             Console.WriteLine("Deplacement de " + joueurUi + " sur le chemin " + chemin);
             var c = new Chemin();
             this._persoAutres[joueurUi].CheminPerso = Chemin.GetFromString(chemin);
+            this._persoAutres[joueurUi].Flagdepl = true;
         }
 
         public void ConnexionNvxJoueur(string oidj, string skin, string coordX, string coordY)
@@ -403,10 +355,7 @@ namespace TTRPG_case
                 }
                 catch (NullReferenceException)
                 {
-
-
                 }
-
             }
             if (this._persoAutres.Count == compte)
                 throw new NullReferenceException("Erreur lors de l'ajout dans _persoAutre");
@@ -420,7 +369,6 @@ namespace TTRPG_case
                 this._persoAutres.Remove(s);
                 this.Components.Remove(p);
                 Console.WriteLine("Deconnexion de " + s);
-
             }
             else
             {

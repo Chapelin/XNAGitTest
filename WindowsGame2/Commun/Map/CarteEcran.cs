@@ -102,11 +102,7 @@ namespace Commun.Map
                 c.AddMouvementFin(new Vecteur(diff));
             }
 
-            //ajout du premier vecteur, nul pour initialiser le deplacement du sprite dans al bonne direction
-            if (c.TailleParcours > 0)
-            {
-                c.AddMouvementDebut(Vecteur.Zero);
-            }
+           
             Console.WriteLine("Chemin calculé pour aller de " + oDepart + " à " + oArrivee + " : ");
             Console.WriteLine(c.ToString());
 
