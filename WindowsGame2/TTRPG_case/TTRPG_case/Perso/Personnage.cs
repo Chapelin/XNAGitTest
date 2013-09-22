@@ -166,6 +166,7 @@ namespace TTRPG_case.Perso
             Console.WriteLine("Perso deplacé de : " + v.vx + " , " + v.vy);
             this._position.X += v.vx;
             this._position.Y += v.vy;
+            Console.WriteLine("Perso maintenant en "+this._position);
         }
 
 
@@ -274,7 +275,8 @@ namespace TTRPG_case.Perso
                     // pour eviter deplacement auto lors de la premiere cases : on ne passe dedans que après un premier compteur déroulé
                     if (this._cheminPrevu.PremierPeekNextFait)
                     {
-                        this.Move(this._cheminPrevu.PeekNext());
+                        v = this._cheminPrevu.PeekNext();
+                        this.Move(v);
                         this._cheminPrevu.RemoveFirst();
                     }
                       v = this._cheminPrevu.PeekNext();
@@ -308,12 +310,11 @@ namespace TTRPG_case.Perso
                 #endregion
         }
 
-       
-
         public void Stop()
         {
-            Console.WriteLine("STOP");
+            Console.WriteLine("STOP en"+this._position);
             this._cheminPrevu.ViderChemin();
+            this.ResetSpriteDirection();
         }
     }
 }

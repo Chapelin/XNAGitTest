@@ -277,6 +277,7 @@ namespace TTRPG_case
             this.AfficherCarteThreadee(valeur);
             //on place le perso à sa position indiquée par le serveur
             this._personnage.Coordonnees = new Coordonnees { X = posX, Y = posY };
+            Console.WriteLine("Perso deposé en "+this._personnage.Coordonnees);
             
         }
 

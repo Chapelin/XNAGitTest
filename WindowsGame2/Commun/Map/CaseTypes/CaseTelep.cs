@@ -12,6 +12,7 @@ namespace Commun.Map.CaseTypes
         public CaseTelep(Texture2D im) : base(im)
         {
             this.franchissable = true;
+            this.ForceStop = true;
         }
 
         public override string OnOver()

@@ -11,6 +11,7 @@ namespace Commun.Map.CaseTypes
         Guid id;
         Texture2D image;
         protected bool franchissable;
+        public bool ForceStop = false;
 
 
         public CaseBase(Texture2D im)

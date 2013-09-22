@@ -20,6 +20,18 @@ namespace TTRPG_Serveur
     {
 
 
+        //TODO:Temporaire
+        public Dictionary<string,Coordonnees> coordonnesArriveesCartes = new Dictionary<string, Coordonnees>(){
+        {"0",new Coordonnees(10,13)},
+        {"1",new Coordonnees(18,8)},
+        {"2", new Coordonnees(1,7)},
+        {"3", new Coordonnees(10,1)},
+        {"4",new Coordonnees(9,13)},
+        {"5",new Coordonnees(1,6)},
+        {"6", new Coordonnees(18,6)},
+        {"7", new Coordonnees(9,1)}
+        }; 
+
         //Dico des clients
         /// <summary>
         /// Table (coupleIpPourt,joueur)
@@ -153,12 +165,19 @@ namespace TTRPG_Serveur
             }
         }
 
-        private void TraiterTeleportation(string s, Joueur joueur)
+        private void TraiterTeleportation(string idTeleporteur, Joueur joueur)
         {
             var carte = "carte2";
-            if (Convert.ToInt32(s) < 4)
+            if (Convert.ToInt32(idTeleporteur) < 4)
                 carte = "carte3";
             //TODO : verifier si l'id de la telep est probable et recuperer l'id de carte adéquat
+            if(!this.coordonnesArriveesCartes.ContainsKey(idTeleporteur))
+                throw new ArgumentException("Erreur, l'id de teleport n'est pas bon");
+            else
+            {
+                Console.WriteLine("Id teleport : "+idTeleporteur);
+            }
+            joueur.Position = this.coordonnesArriveesCartes[idTeleporteur];
             // puis positionner j.position.x et Y comme il faut
             DemandeCarte(carte,joueur);
         }
