@@ -29,6 +29,12 @@ namespace CommunXnaFree.Spacialisation
             return X + "," + Y;
         }
 
+        public static Coordonnees FromString(string t)
+        {
+            var temp = t.Split(',');
+            var c = new Coordonnees(Convert.ToInt32(temp[0]), Convert.ToInt32(temp[1]));
+            return c;
+        }
 
         public Coordonnees Abs()
         {

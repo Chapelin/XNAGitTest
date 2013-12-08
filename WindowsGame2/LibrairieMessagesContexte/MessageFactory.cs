@@ -21,6 +21,7 @@ namespace LibrairieMessagesContexte.Messages
         DeconnexionJoueur =11,
         DemandeTelep = 12,
         DeplacementFini = 13,
+        Stop = 14
     }
 
     public static class MessageFactory
@@ -66,6 +67,9 @@ namespace LibrairieMessagesContexte.Messages
                     break;
                 case TypeMessage.DemandeTelep:
                     retour = new MessageDemandeTelep();
+                    break;
+                    case TypeMessage.Stop:
+                    retour = new MessageStop();
                     break;
                 default:
                     retour = null;

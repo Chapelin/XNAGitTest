@@ -168,26 +168,38 @@ namespace TTRPG_case
                 this.Exit();
 
             MouseState ms = Mouse.GetState();
-            if (ms.X > 0 && ms.X < this._carteEcran.NombreCasesX * TailleCaseX && ms.Y > 0 && ms.Y < this._carteEcran.NombreCasesY * TailleCaseY && this.IsActive && !this._personnage.ACheminPrevu())
+            if (ms.X > 0 && ms.X < this._carteEcran.NombreCasesX * TailleCaseX && ms.Y > 0 && ms.Y < this._carteEcran.NombreCasesY * TailleCaseY && this.IsActive/* && !this._personnage.ACheminPrevu()*/)
             {
                 //Console.WriteLine("Souris dans la fenetre");
                 //Console.WriteLine("Case en " + ms.X / TAILLE_CASE_X + " , " + ms.Y / TAILLE_CASE_Y);
                 if (this.CoolDownClick < 0)
                 {
-                    if (ms.LeftButton == ButtonState.Pressed && this._personnage.Compteur < 0)
+                    if (ms.LeftButton == ButtonState.Pressed)
                     {
-                        this.CoolDownClick = CoolDownClickValue;
-                        var coo = new Coordonnees(ms.X/TailleCaseX, ms.Y/TailleCaseY);
-                        var c = this._carteEcran.CalculerChemin(this._personnage.Coordonnees, coo);
-                        this._personnage.CheminPerso = c;
-                        IMessage m = MessageFactory.GetInstanceOf(TypeMessage.DemandeDeplacement);
-                        m.PreparerMessage(new object[] {c});
-                        this._emmeteur.envoyer(m);
+                        if (!(this._personnage.Compteur < 0))
+                        {
+                            this._personnage.Stop();
+                            this._personnage.Compteur = -1;
+                            var mes = MessageFactory.GetInstanceOf(TypeMessage.Stop);
+                            mes.PreparerMessage(new object[]{this._personnage.Coordonnees});
+                            this._emmeteur.envoyer(mes);
+                        }
+                        else
+                        {
+                            this.CoolDownClick = CoolDownClickValue;
+                            var coo = new Coordonnees(ms.X / TailleCaseX, ms.Y / TailleCaseY);
+                            var c = this._carteEcran.CalculerChemin(this._personnage.Coordonnees, coo);
+                            this._personnage.CheminPerso = c;
+                            IMessage m = MessageFactory.GetInstanceOf(TypeMessage.DemandeDeplacement);
+                            m.PreparerMessage(new object[] { c });
+                            this._emmeteur.envoyer(m);
+                        }
                     }
                 }
                 else
                 {
                     CoolDownClick--;
+
                 }
             }
             base.Update(gameTime);
