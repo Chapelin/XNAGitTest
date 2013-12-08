@@ -19,7 +19,8 @@ namespace LibrairieMessagesContexte.Messages
         Notif = 9,
         ConnexionJoueur = 10,
         DeconnexionJoueur =11,
-        DemandeTelep = 12
+        DemandeTelep = 12,
+        DeplacementFini = 13,
     }
 
     public static class MessageFactory
