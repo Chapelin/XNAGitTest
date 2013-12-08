@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Commun.Map.CaseTypes;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,30 +12,18 @@ namespace Commun.Map
             {
                 case "0":
                     return new CaseVide(tex);
-                    break;
                 case "1":
                     return new CaseHerbe(tex);
-                    break;
                 case "2":
                     return new CaseTelep(tex);
-                    break;
                 default :
                     throw  new ArgumentException("Case inconnue : "+id);
-                    break;
             }
         }
 
-        public static string GetCaseType(CaseBase ca)
+        public static Type GetCaseType(CaseBase ca)
         {
-            if (ca != null)
-            {
-                return (ca.GetType().Name);
-            }
-            return string.Empty;
-
-
-
+            return ca != null ? (ca.GetType()) : null;
         }
-
     }
 }

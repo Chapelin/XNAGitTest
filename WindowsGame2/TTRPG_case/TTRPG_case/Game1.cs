@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading;
-using System.Windows.Forms;
 using ClientServeur;
 using CommunXnaFree.Deplacement;
 using CommunXnaFree.Spacialisation;
@@ -14,10 +13,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using TTRPG_case.Communication;
 using TTRPG_case.Perso;
-using Commun;
 using Commun.Map;
 using LibrairieMessagesContexte.Messages;
-using Utilitaires.Random;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 
 namespace TTRPG_case
@@ -123,8 +120,8 @@ namespace TTRPG_case
 
             AfficherCarte(new ObjetChargementCarte(this, "cartevide"));
             var t = MessageFactory.GetInstanceOf(TypeMessage.DemandeCarte);
-            var cartedem = "carte2";
-            RandomManager r = new RandomManager();
+            const string cartedem = "carte2";
+            //var r = new RandomManager();
 
             //cartedem = r.GetInt(2) == 0 ? "carte2" : "carte3";
             t.PreparerMessage(new object[] { cartedem });
@@ -179,7 +176,7 @@ namespace TTRPG_case
                 {
                     if (ms.LeftButton == ButtonState.Pressed && this._personnage.Compteur < 0)
                     {
-                        this.CoolDownClick = Game1.CoolDownClickValue;
+                        this.CoolDownClick = CoolDownClickValue;
                         var coo = new Coordonnees(ms.X/TailleCaseX, ms.Y/TailleCaseY);
                         var c = this._carteEcran.CalculerChemin(this._personnage.Coordonnees, coo);
                         this._personnage.CheminPerso = c;
@@ -346,7 +343,6 @@ namespace TTRPG_case
         internal void NotifDepl(string joueurUi, string chemin)
         {
             Console.WriteLine("Deplacement de " + joueurUi + " sur le chemin " + chemin);
-            var c = new Chemin();
             this._persoAutres[joueurUi].CheminPerso = Chemin.GetFromString(chemin);
             this._persoAutres[joueurUi].Flagdepl = true;
         }

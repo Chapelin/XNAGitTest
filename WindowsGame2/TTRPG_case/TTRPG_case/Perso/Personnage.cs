@@ -6,7 +6,6 @@ using CommunXnaFree.Spacialisation;
 using LibrairieUtil.AnimatedSprite;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Commun;
 using Commun.Map;
 
 namespace TTRPG_case.Perso
@@ -71,6 +70,7 @@ namespace TTRPG_case.Perso
         /// <param name="spriteHaut"></param>
         /// <param name="spriteBas"></param>
         /// <param name="spriteGauche"></param>
+        /// <param name="g">Game </param>
         public Personnage(AnimatedSprite spriteHaut, AnimatedSprite spriteBas, AnimatedSprite spriteGauche, AnimatedSprite spriteDroit, int posX, int posY, Game g)
             : this(posX, posY, g)
         {
@@ -78,12 +78,12 @@ namespace TTRPG_case.Perso
         }
 
 
-
         /// <summary>
         /// Constructeur d'un personnage
         /// </summary>
         /// <param name="posX"></param>
         /// <param name="posY"></param>
+        /// <param name="g">Game </param>
         public Personnage(int posX, int posY, Game g)
             : this(g)
         {
@@ -271,7 +271,7 @@ namespace TTRPG_case.Perso
             base.Update(gameTime);
                 if (Compteur < 0 && Flagdepl)
                 {
-                    Vecteur v = Vecteur.Zero;
+                    Vecteur v;
                     // pour eviter deplacement auto lors de la premiere cases : on ne passe dedans que après un premier compteur déroulé
                     if (this._cheminPrevu.PremierPeekNextFait)
                     {
@@ -301,7 +301,7 @@ namespace TTRPG_case.Perso
                     Console.WriteLine("Case testée : " + this._nextCase + "de type " + temp);
                     Console.WriteLine("********************************************\r\n" + caseCible.OnOver() +
                                       "\r\n********************************************\r\n");
-                    if (temp == "CaseTelep")
+                    if (temp == typeof(CaseTelep))
                     {
                         var caseTelep = caseCible as CaseTelep;
                         ((Game1) Game).DemanderTeleportation(caseTelep.idTelep);
