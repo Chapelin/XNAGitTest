@@ -1,0 +1,3 @@
+[submodule "Pathfinding"]
+	path = Pathfinding
+	url = https://github.com/Chapelin/Pathfinding.git
