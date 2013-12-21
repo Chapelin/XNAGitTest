@@ -102,7 +102,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Pathfinding\PathFinding\AStart\AStart.csproj">
+    <ProjectReference Include="..\..\Pathfinding\PathFinding\AStart\AStart.csproj">
       <Project>{0FCEEC6A-CF99-46D4-8F27-F1F49191FFEB}</Project>
       <Name>AStart</Name>
     </ProjectReference>
