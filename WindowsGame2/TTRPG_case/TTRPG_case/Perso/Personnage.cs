@@ -60,6 +60,11 @@ namespace TTRPG_case.Perso
         private bool _flagdepl;
         private Coordonnees _nextCase;
 
+        /// <summary>
+        /// Coordonnées avant le GO du serveur
+        /// </summary>
+        public Coordonnees CoordonneesAvantValidation;
+
 
         /// <summary>
         /// Constructeur d'un personnage
@@ -289,7 +294,7 @@ namespace TTRPG_case.Perso
                 }
                 if (Flagdepl && Compteur > -1)
                     Compteur--;
-            if(Flagdepl)
+            if(Flagdepl && this._cheminPrevu!=null)
                 Tick();
 
                 #region WIP : gestion de l'arrivée sur une case
@@ -315,6 +320,7 @@ namespace TTRPG_case.Perso
             Console.WriteLine("STOP en"+this._position);
             this._cheminPrevu.ViderChemin();
             this.ResetSpriteDirection();
+            this.Compteur = -1;
         }
     }
 }

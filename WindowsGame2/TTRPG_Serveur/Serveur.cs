@@ -61,7 +61,7 @@ namespace TTRPG_Serveur
                     var t = new Thread(TraiterClient);
                     t.Start(reponse);
                 }
-                catch (SocketException e)
+                catch (SocketException)
                 {
 
                 }
@@ -159,10 +159,22 @@ namespace TTRPG_Serveur
                 case TypeMessage.DemandeTelep:
                     TraiterTeleportation(mess.elements[0], j);
                     break;
+                case TypeMessage.Stop:
+                    TraiterStop(mess.elements[0], j);
+                    break;
                 default:
                     //erreur
                     break;
             }
+        }
+
+        private void TraiterStop(string s, Joueur joueur)
+        {
+            var coord = Coordonnees.FromString(s);
+            //TODO verifier si coordonnées possible;
+            joueur.Position = coord;
+
+
         }
 
         private void TraiterTeleportation(string idTeleporteur, Joueur joueur)
@@ -214,8 +226,6 @@ namespace TTRPG_Serveur
             Contenu[Contenu.Keys.First(carte => carte.NomCarte == nomCarte)].AjouteJoueur(j);
 
             this.NotifierConnexion(j);
-
-
         }
 
 

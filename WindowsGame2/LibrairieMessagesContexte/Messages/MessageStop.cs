@@ -7,7 +7,7 @@ using LibrairieUtil;
 
 namespace LibrairieMessagesContexte.Messages
 {
-    public class MessageDemandeTelep : Message, IMessage
+    public class MessageStop : Message
     {
 
 
@@ -16,16 +16,14 @@ namespace LibrairieMessagesContexte.Messages
         /// <summary>
         /// Construit un MessageDemandeCarte
         /// </summary>
-        public MessageDemandeTelep()
-            : base(TypeMessage.DemandeTelep, 1)
+        public MessageStop()
+            : base(TypeMessage.Stop, 1)
         {
-            Console.WriteLine("MessageDemandeTelep : instance créée");
+            Console.WriteLine("MessageStop : instance créée");
         }
 
 
-
-
-      
+       
 
        
 
