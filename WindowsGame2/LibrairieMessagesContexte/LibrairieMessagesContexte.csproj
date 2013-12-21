@@ -95,13 +95,13 @@
     <Compile Include="IEmetteur.cs" />
     <Compile Include="Messages\MessageStop.cs" />
     <Compile Include="Messages\MessageDeplacementFini.cs" />
-    <Compile Include="Messages\MessageDemandeTelep.cs" />
+    <Compile Include="Messages\MessageReponseDeplacement.cs" />
     <Compile Include="Messages\MessageDeconnexion.cs" />
     <Compile Include="Messages\MessageConnexion.cs" />
     <Compile Include="Messages\MessageNotif.cs" />
     <Compile Include="Messages\MessageIndiquerPort.cs" />
     <Compile Include="Messages\MessageReponseCarte.cs" />
-    <Compile Include="Messages\MessageReponseDeplacement.cs" />
+    <Compile Include="Messages\MessageDemandeTelep.cs" />
     <Compile Include="Messages\MessageDemandeDeplacement.cs" />
     <Compile Include="Messages\MessageIndicationClick.cs" />
     <Compile Include="Messages\IMessage.cs" />
