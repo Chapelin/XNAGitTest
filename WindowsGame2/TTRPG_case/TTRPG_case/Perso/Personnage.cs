@@ -60,6 +60,11 @@ namespace TTRPG_case.Perso
         private bool _flagdepl;
         private Coordonnees _nextCase;
 
+        /// <summary>
+        /// Coordonnées avant le GO du serveur
+        /// </summary>
+        public Coordonnees CoordonneesAvantValidation;
+
 
         /// <summary>
         /// Constructeur d'un personnage

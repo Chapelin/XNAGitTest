@@ -193,6 +193,7 @@ namespace TTRPG_case
                             IMessage m = MessageFactory.GetInstanceOf(TypeMessage.DemandeDeplacement);
                             m.PreparerMessage(new object[] { c });
                             this._emmeteur.envoyer(m);
+                            this._personnage.CoordonneesAvantValidation = this._personnage.Coordonnees;
                         }
                     }
                 }
@@ -303,12 +304,11 @@ namespace TTRPG_case
         }
 
 
-        public void ReponseDeplacement(string p)
+        public void ReponseDeplacement(string reponse)
         {
-            Console.WriteLine("Reponse reçue du serveur pour le deplacement : " + p);
-            var t = p.Split(';');
+            Console.WriteLine("Reponse reçue du serveur pour le deplacement : " + reponse);
 
-            if (Convert.ToBoolean(t[0]))
+            if (Convert.ToBoolean(reponse))
             {
                 Console.WriteLine("Deplacement accepté");
                 this._personnage.Flagdepl = true;
@@ -316,7 +316,10 @@ namespace TTRPG_case
             else
             {
                 Console.WriteLine("Deplacement refusé");
-                this._personnage.CheminPerso = null;
+                this._personnage.Flagdepl = false;
+                this._personnage.Coordonnees = this._personnage.CoordonneesAvantValidation;
+                this._personnage.Stop();
+
             }
         }
 
@@ -324,7 +327,7 @@ namespace TTRPG_case
         {
             Console.WriteLine("Deplacement " + v);
             Console.WriteLine("Direction avant : " + personnage.Direction);
-
+            
             //todo : optimiser
             switch (v.vx)
             {
