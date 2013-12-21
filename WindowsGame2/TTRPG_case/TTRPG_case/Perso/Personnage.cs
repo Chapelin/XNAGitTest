@@ -320,6 +320,7 @@ namespace TTRPG_case.Perso
             Console.WriteLine("STOP en"+this._position);
             this._cheminPrevu.ViderChemin();
             this.ResetSpriteDirection();
+            this.Compteur = -1;
         }
     }
 }

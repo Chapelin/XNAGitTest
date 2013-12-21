@@ -168,45 +168,50 @@ namespace TTRPG_case
                 this.Exit();
 
             MouseState ms = Mouse.GetState();
-            if (ms.X > 0 && ms.X < this._carteEcran.NombreCasesX * TailleCaseX && ms.Y > 0 && ms.Y < this._carteEcran.NombreCasesY * TailleCaseY && this.IsActive/* && !this._personnage.ACheminPrevu()*/)
+            if (ms.X > 0 && ms.X < this._carteEcran.NombreCasesX * TailleCaseX && ms.Y > 0 && ms.Y < this._carteEcran.NombreCasesY * TailleCaseY && this.IsActive)
             {
-                //Console.WriteLine("Souris dans la fenetre");
-                //Console.WriteLine("Case en " + ms.X / TAILLE_CASE_X + " , " + ms.Y / TAILLE_CASE_Y);
                 if (this.CoolDownClick < 0)
                 {
                     if (ms.LeftButton == ButtonState.Pressed)
                     {
                         if (!(this._personnage.Compteur < 0))
                         {
-                            this._personnage.Stop();
-                            this._personnage.Compteur = -1;
-                            var mes = MessageFactory.GetInstanceOf(TypeMessage.Stop);
-                            mes.PreparerMessage(new object[]{this._personnage.Coordonnees});
-                            this._emmeteur.envoyer(mes);
+                            GererNotifierStop();
                         }
                         else
                         {
-                            this.CoolDownClick = CoolDownClickValue;
-                            var coo = new Coordonnees(ms.X / TailleCaseX, ms.Y / TailleCaseY);
-                            var c = this._carteEcran.CalculerChemin(this._personnage.Coordonnees, coo);
-                            this._personnage.CheminPerso = c;
-                            IMessage m = MessageFactory.GetInstanceOf(TypeMessage.DemandeDeplacement);
-                            m.PreparerMessage(new object[] { c });
-                            this._emmeteur.envoyer(m);
-                            this._personnage.CoordonneesAvantValidation = this._personnage.Coordonnees;
+                            GererDemandeDeplacementPerso(ms);
                         }
                     }
                 }
                 else
                 {
                     CoolDownClick--;
-
                 }
             }
             base.Update(gameTime);
         }
 
- 
+        private void GererNotifierStop()
+        {
+            this._personnage.Stop();
+            var mes = MessageFactory.GetInstanceOf(TypeMessage.Stop);
+            mes.PreparerMessage(new object[] {this._personnage.Coordonnees});
+            this._emmeteur.envoyer(mes);
+        }
+
+        private void GererDemandeDeplacementPerso(MouseState ms)
+        {
+            this.CoolDownClick = CoolDownClickValue;
+            var coo = new Coordonnees(ms.X/TailleCaseX, ms.Y/TailleCaseY);
+            var c = this._carteEcran.CalculerChemin(this._personnage.Coordonnees, coo);
+            this._personnage.CheminPerso = c;
+            IMessage m = MessageFactory.GetInstanceOf(TypeMessage.DemandeDeplacement);
+            m.PreparerMessage(new object[] {c});
+            this._emmeteur.envoyer(m);
+            this._personnage.CoordonneesAvantValidation = this._personnage.Coordonnees;
+        }
+
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -283,8 +288,6 @@ namespace TTRPG_case
                 this.G = ga;
                 this.CarteACharger = c;
             }
-
-
         }
 
         /// <summary>
