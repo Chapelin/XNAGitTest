@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IEmetteur.cs" />
+    <Compile Include="Messages\MessageStop.cs" />
     <Compile Include="Messages\MessageDeplacementFini.cs" />
     <Compile Include="Messages\MessageDemandeTelep.cs" />
     <Compile Include="Messages\MessageDeconnexion.cs" />
