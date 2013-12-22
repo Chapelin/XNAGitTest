@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commun", "Commun\Commun.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunXnaFree", "CommunXnaFree\CommunXnaFree.csproj", "{9B510D60-E3EB-48CB-9B6D-FE220E40AF47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilitaires", "..\Utilitaires\Utilitaires.csproj", "{F5C9241A-7544-46A9-BBC3-94CF1450234D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AStart", "..\Pathfinding\PathFinding\AStart\AStart.csproj", "{0FCEEC6A-CF99-46D4-8F27-F1F49191FFEB}"
 EndProject
 Global
@@ -107,16 +105,6 @@ Global
 		{9B510D60-E3EB-48CB-9B6D-FE220E40AF47}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{9B510D60-E3EB-48CB-9B6D-FE220E40AF47}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9B510D60-E3EB-48CB-9B6D-FE220E40AF47}.Release|x86.ActiveCfg = Release|Any CPU
-		{F5C9241A-7544-46A9-BBC3-94CF1450234D}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{F5C9241A-7544-46A9-BBC3-94CF1450234D}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{F5C9241A-7544-46A9-BBC3-94CF1450234D}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{F5C9241A-7544-46A9-BBC3-94CF1450234D}.Debug|x86.ActiveCfg = Debug|x86
-		{F5C9241A-7544-46A9-BBC3-94CF1450234D}.Debug|x86.Build.0 = Debug|x86
-		{F5C9241A-7544-46A9-BBC3-94CF1450234D}.Release|Any CPU.ActiveCfg = Release|x86
-		{F5C9241A-7544-46A9-BBC3-94CF1450234D}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{F5C9241A-7544-46A9-BBC3-94CF1450234D}.Release|Mixed Platforms.Build.0 = Release|x86
-		{F5C9241A-7544-46A9-BBC3-94CF1450234D}.Release|x86.ActiveCfg = Release|x86
-		{F5C9241A-7544-46A9-BBC3-94CF1450234D}.Release|x86.Build.0 = Release|x86
 		{0FCEEC6A-CF99-46D4-8F27-F1F49191FFEB}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{0FCEEC6A-CF99-46D4-8F27-F1F49191FFEB}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{0FCEEC6A-CF99-46D4-8F27-F1F49191FFEB}.Debug|Mixed Platforms.Build.0 = Debug|x86
