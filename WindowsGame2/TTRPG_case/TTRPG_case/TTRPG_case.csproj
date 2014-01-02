@@ -13,7 +13,7 @@
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
-    <XnaProfile>HiDef</XnaProfile>
+    <XnaProfile>Reach</XnaProfile>
     <XnaCrossPlatformGroupID>71a86053-19b9-446c-b6ce-fe28b56ada98</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
     <ApplicationIcon>Game.ico</ApplicationIcon>
@@ -138,6 +138,10 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Utilitaires\Utilitaires.csproj">
+      <Project>{F5C9241A-7544-46A9-BBC3-94CF1450234D}</Project>
+      <Name>Utilitaires</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ClientServeur\ClientServeur.csproj">
       <Project>{8F89F5BB-328C-406F-A66B-68E8A78A91E0}</Project>
       <Name>ClientServeur</Name>

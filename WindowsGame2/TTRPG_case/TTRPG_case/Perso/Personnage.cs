@@ -3,6 +3,7 @@ using System.Text;
 using Commun.Map.CaseTypes;
 using CommunXnaFree.Deplacement;
 using CommunXnaFree.Spacialisation;
+using GestionObjetClick;
 using LibrairieUtil.AnimatedSprite;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,9 +11,9 @@ using Commun.Map;
 
 namespace TTRPG_case.Perso
 {
-    public class Personnage : DrawableGameComponent
+    public class Personnage : MouseAwareObject
     {
-        public Texture2D Sprite
+        public override Texture2D SpriteToDraw
         {
             get
             {
@@ -28,7 +29,6 @@ namespace TTRPG_case.Perso
         /// </summary>
         readonly Chemin.CheminFiniHandler _cfh;
 
-        Coordonnees _position;
 
         /// <summary>
         /// Offset entre le 0,0 du perso et le 0,0 de la case pour centrer le sprite
@@ -90,9 +90,8 @@ namespace TTRPG_case.Perso
         /// <param name="posY"></param>
         /// <param name="g">Game </param>
         public Personnage(int posX, int posY, Game g)
-            : this(g)
+            : base(g,0,g.GraphicsDevice,"Perso",new Coordonnees(posX,posY))
         {
-            this._position = new Coordonnees { X = posX, Y = posY };
 
             this.OffsetCaseDepl = Vecteur.Zero;
             this.Direction = 2;
@@ -104,9 +103,7 @@ namespace TTRPG_case.Perso
 
         }
 
-        public Personnage(Game g)
-            : base(g)
-        { }
+  
 
 
         /// <summary>
@@ -169,9 +166,9 @@ namespace TTRPG_case.Perso
         public void Move(Vecteur v)
         {
             Console.WriteLine("Perso deplacé de : " + v.vx + " , " + v.vy);
-            this._position.X += v.vx;
-            this._position.Y += v.vy;
-            Console.WriteLine("Perso maintenant en "+this._position);
+            this.Position.X += v.vx;
+            this.Position.Y += v.vy;
+            Console.WriteLine("Perso maintenant en " + this.Position);
         }
 
 
@@ -230,13 +227,13 @@ namespace TTRPG_case.Perso
         /// </summary>
         public Coordonnees Coordonnees
         {
-            get { return this._position; }
-            set { this._position = value; }
+            get { return this.Position; }
+            set { this.Position = value; }
         }
 
         public Texture2D GetSprite
         {
-            get { return this.Sprite; }
+            get { return this.SpriteToDraw; }
         }
 
         public bool Flagdepl
@@ -256,7 +253,7 @@ namespace TTRPG_case.Perso
             var sb = new StringBuilder();
             sb.AppendLine("*************************************PERSO*****************");
             sb.Append("Offset case dep").AppendLine(this.OffsetCaseDepl.ToString());
-            sb.Append("Case actuelle ").AppendLine(this._position.ToString());
+            sb.Append("Case actuelle ").AppendLine(this.Position.ToString());
             sb.Append("Direction ").AppendLine(this.Direction.ToString());
             sb.AppendLine("******************************************************");
             return sb.ToString();
@@ -264,7 +261,6 @@ namespace TTRPG_case.Perso
 
         public override void Draw(GameTime gameTime)
         {
-            base.Draw(gameTime);
             var sp = new SpriteBatch(this.Game.GraphicsDevice);
             sp.Begin();
             sp.Draw(this.GetSprite, new Rectangle(this.Coordonnees.X * Game1.TailleCaseX + this.OffsetCaseSprite.X + this.OffsetCaseDepl.vx, this.Coordonnees.Y * Game1.TailleCaseY + this.OffsetCaseSprite.Y + this.OffsetCaseDepl.vy, this.GetSprite.Width, this.GetSprite.Height), Color.White);
@@ -317,7 +313,7 @@ namespace TTRPG_case.Perso
 
         public void Stop()
         {
-            Console.WriteLine("STOP en"+this._position);
+            Console.WriteLine("STOP en" + this.Position);
             this._cheminPrevu.ViderChemin();
             this.ResetSpriteDirection();
             this.Compteur = -1;
