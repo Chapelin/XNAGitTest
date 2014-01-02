@@ -226,6 +226,7 @@ namespace TTRPG_case
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            moaM.DrawHiddenObjets();
             GraphicsDevice.Clear(Color.CornflowerBlue);
             
             _spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
