@@ -262,8 +262,9 @@ namespace TTRPG_case.Perso
         public override void Draw(GameTime gameTime)
         {
             var sp = new SpriteBatch(this.Game.GraphicsDevice);
+            base.Draw(gameTime);
             sp.Begin();
-            sp.Draw(this.GetSprite, new Rectangle(this.Coordonnees.X * Game1.TailleCaseX + this.OffsetCaseSprite.X + this.OffsetCaseDepl.vx, this.Coordonnees.Y * Game1.TailleCaseY + this.OffsetCaseSprite.Y + this.OffsetCaseDepl.vy, this.GetSprite.Width, this.GetSprite.Height), Color.White);
+            sp.Draw(this.GetSprite, new Rectangle(this.Coordonnees.X * Game1.TailleCaseX + this.OffsetCaseSprite.X + this.OffsetCaseDepl.vx, this.Coordonnees.Y * Game1.TailleCaseY + this.OffsetCaseSprite.Y + this.OffsetCaseDepl.vy, this.GetSprite.Width, this.GetSprite.Height),null, Color.White,0,Vector2.Zero,SpriteEffects.None,this.Z);
             sp.End();
         }
 

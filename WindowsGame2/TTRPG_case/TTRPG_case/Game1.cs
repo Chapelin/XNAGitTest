@@ -6,6 +6,7 @@ using System.Threading;
 using ClientServeur;
 using CommunXnaFree.Deplacement;
 using CommunXnaFree.Spacialisation;
+using GestionObjetClick;
 using LibrairieUtil;
 using LibrairieUtil.AnimatedSprite;
 using Microsoft.Xna.Framework;
@@ -35,7 +36,7 @@ namespace TTRPG_case
         readonly Recepteur _recepteur;
         readonly Vecteur[] _deplacementPerFrame;
         Personnage _personnage;
-
+        private MouseAwareObjectManager moaM;
         public int CoolDownClick;
         private Dictionary<string, Personnage> _persoAutres;
 
@@ -69,7 +70,7 @@ namespace TTRPG_case
             this._deplacementPerFrame[1] = new Vecteur(TailleCaseX / NombreTickDeplacement, 0);
             this._deplacementPerFrame[2] = Vecteur.Inverse(_deplacementPerFrame[0]);
             this._deplacementPerFrame[3] = Vecteur.Inverse(_deplacementPerFrame[1]);
-
+            moaM = new MouseAwareObjectManager(this);
             Content.RootDirectory = "Content";
         }
 
@@ -113,7 +114,8 @@ namespace TTRPG_case
 
             #endregion
 
-            this.Components.Add(this._personnage);
+            moaM.Add(this._personnage);
+            //this.Components.Add(this._personnage);
             this._listeTextureCarte.Add("1", te);
             this._listeTextureCarte.Add("0", tevide);
             this._listeTextureCarte.Add("2", teTelep);
@@ -168,6 +170,11 @@ namespace TTRPG_case
                 this.Exit();
 
             MouseState ms = Mouse.GetState();
+            if (ms.LeftButton == ButtonState.Pressed)
+            {
+                Console.WriteLine(moaM.DevinerNomObjet(ms));
+            }
+
             if (ms.X > 0 && ms.X < this._carteEcran.NombreCasesX * TailleCaseX && ms.Y > 0 && ms.Y < this._carteEcran.NombreCasesY * TailleCaseY && this.IsActive)
             {
                 if (this.CoolDownClick < 0)
@@ -220,13 +227,15 @@ namespace TTRPG_case
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin();
+            
+            _spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+            
             for (int x = 0; x < this._carteEcran.NombreCasesX; x++)
             {
 
                 for (int y = 0; y < this._carteEcran.NombreCasesY; y++)
                 {
-                    _spriteBatch.Draw(this._carteEcran.GetCase(x, y).getImage(), new Rectangle(x * TailleCaseX, y * TailleCaseY, TailleCaseX, TailleCaseY), Color.White);
+                    _spriteBatch.Draw(this._carteEcran.GetCase(x, y).getImage(), new Rectangle(x * TailleCaseX, y * TailleCaseY, TailleCaseX, TailleCaseY),null, Color.White,0f, Vector2.Zero,SpriteEffects.None,1.0f);
                 }
             }
 
@@ -234,6 +243,7 @@ namespace TTRPG_case
 
             _spriteBatch.End();
             base.Draw(gameTime);
+            
         }
 
 
