@@ -80,6 +80,7 @@ namespace TTRPG_case.Perso
             : this(posX, posY, g)
         {
             this.SetSprites(spriteHaut, spriteBas, spriteGauche, spriteDroit);
+            
         }
 
 
@@ -119,6 +120,7 @@ namespace TTRPG_case.Perso
             for (var i = 0; i < 4; i++)
                 this._spritesAnimees[i].InitialiserAnimation();
             this.OffsetCaseSprite = new Coordonnees(((Game1.TailleCaseX - this.GetSprite.Width) / 2), ((Game1.TailleCaseY - this.GetSprite.Height) / 2));
+            this.ColorerCurrentTexture(100);
         }
 
 
@@ -176,6 +178,7 @@ namespace TTRPG_case.Perso
 
         public void Tick()
         {
+
             int dir = this.GetNextDirection();
             this._spritesAnimees[dir].Tick();
             //gerer offset
