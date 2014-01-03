@@ -172,9 +172,18 @@ namespace TTRPG_case
             MouseState ms = Mouse.GetState();
             if (ms.LeftButton == ButtonState.Pressed)
             {
-                Console.WriteLine(moaM.DevinerNomObjet(ms));
-            }
+                Console.WriteLine("click sur : "+moaM.DevinerNomObjet(ms));
+                try
+                {
+                    moaM.TakeScreenOfHidden(@"C:\temp\test.png");
+                    moaM.ToList()[0].SaveColoreeAsPng(@"C:\temp\test7.png");
+                }
+                catch (Exception)
+                {
+                }
 
+            }
+         
             if (ms.X > 0 && ms.X < this._carteEcran.NombreCasesX * TailleCaseX && ms.Y > 0 && ms.Y < this._carteEcran.NombreCasesY * TailleCaseY && this.IsActive)
             {
                 if (this.CoolDownClick < 0)
