@@ -22,7 +22,16 @@ namespace TTRPG_case.Perso
         }
 
 
-      
+        public override Coordonnees PositionToDraw
+        {
+            get
+            {
+               return new Coordonnees(
+                    this.Coordonnees.X*Game1.TailleCaseX + this.OffsetCaseSprite.X + this.OffsetCaseDepl.vx,
+                    this.Coordonnees.Y*Game1.TailleCaseY + this.OffsetCaseSprite.Y + this.OffsetCaseDepl.vy);
+            }
+        }
+
 
         /// <summary>
         /// Handler de l'evenement de fin de chemin, pour regler l'animation
@@ -270,6 +279,7 @@ namespace TTRPG_case.Perso
             sp.Draw(this.GetSprite, new Rectangle(this.Coordonnees.X * Game1.TailleCaseX + this.OffsetCaseSprite.X + this.OffsetCaseDepl.vx, this.Coordonnees.Y * Game1.TailleCaseY + this.OffsetCaseSprite.Y + this.OffsetCaseDepl.vy, this.GetSprite.Width, this.GetSprite.Height),null, Color.White,0,Vector2.Zero,SpriteEffects.None,this.Z);
             sp.End();
         }
+
 
         public override void Update(GameTime gameTime)
         {

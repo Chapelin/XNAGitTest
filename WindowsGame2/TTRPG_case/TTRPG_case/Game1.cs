@@ -175,8 +175,8 @@ namespace TTRPG_case
                 Console.WriteLine("click sur : "+moaM.DevinerNomObjet(ms));
                 try
                 {
-                    moaM.TakeScreenOfHidden(@"C:\temp\test.png");
-                    moaM.ToList()[0].SaveColoreeAsPng(@"C:\temp\test7.png");
+                    //moaM.TakeScreenOfHidden(@"C:\temp\test.png");
+                    //moaM.ToList()[0].SaveColoreeAsPng(@"C:\temp\test7.png");
                 }
                 catch (Exception)
                 {
