@@ -388,7 +388,7 @@ namespace TTRPG_case
         public void ConnexionNvxJoueur(string oidj, string skin, string coordX, string coordY)
         {
             Console.WriteLine("Joueur " + oidj + " connecté");
-            var p = new Personnage(Convert.ToInt32(coordX), Convert.ToInt32(coordY),this);
+            var p = new Personnage(Convert.ToInt32(coordX), Convert.ToInt32(coordY), this) {Id = oidj};
             this.ChargeTexturePerso(p);
             //TODO : debug : null reference exception ??
             var compte = this._persoAutres.Count;
@@ -397,7 +397,7 @@ namespace TTRPG_case
                 try
                 {
                     this._persoAutres.Add(oidj, p);
-                    this.Components.Add(p);
+                    moaM.Add(p);
                     break;
                 }
                 catch (NullReferenceException)
@@ -414,7 +414,7 @@ namespace TTRPG_case
             {
                 var p = _persoAutres[s];
                 this._persoAutres.Remove(s);
-                this.Components.Remove(p);
+                moaM.Remove(p);
                 Console.WriteLine("Deconnexion de " + s);
             }
             else

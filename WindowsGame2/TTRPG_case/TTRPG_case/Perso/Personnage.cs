@@ -22,7 +22,7 @@ namespace TTRPG_case.Perso
         }
 
 
-        public override Coordonnees PositionToDraw
+        public  Coordonnees PositionToDraw
         {
             get
             {
